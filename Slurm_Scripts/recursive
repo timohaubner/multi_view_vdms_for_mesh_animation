@@ -1,0 +1,477 @@
+#!/usr/bin/env bash
+
+#SBATCH --job-name=easymocap_recursive
+#SBATCH --partition=24g
+#SBATCH --qos=students_normal
+#SBATCH --gres=gpu:1
+#SBATCH --nodes=1
+#SBATCH --output=slurm-%x-%j.out
+#SBATCH --error=slurm-%x-%j.err
+
+set -Eeuo pipefail
+
+###############################################################################
+# Konfiguration
+###############################################################################
+
+DATA_ROOT="/mnt/home/timohaubner/projects/data/CameraAblation"
+HOST_OUTPUT_ROOT="/mnt/home/timohaubner/projects/data/easymocap/output/CameraAblation"
+CONTAINER_OUTPUT_ROOT="/opt/EasyMocap/output"
+
+CONTAINER_IMAGE="52cde7f3355b"
+CONTAINER_ARCHIVE="/mnt/home/timohaubner/easymocap_v3.tar"
+
+# Es werden ausschließlich diese Kameranamen berücksichtigt.
+# Pro Sequenz wird automatisch die tatsächlich vorhandene Untermenge benutzt.
+ALLOWED_CAMERAS=("00" "01" "02" "03" "04")
+MIN_CAMERAS=2
+
+###############################################################################
+# Grundlegende Prüfungen
+###############################################################################
+
+if [[ ! -d "${DATA_ROOT}" ]]; then
+    echo "FEHLER: Eingabeverzeichnis existiert nicht:"
+    echo "        ${DATA_ROOT}"
+    exit 1
+fi
+
+mkdir -p "${HOST_OUTPUT_ROOT}"
+
+if [[ -z "${CUDA_VISIBLE_DEVICES:-}" ]]; then
+    echo "FEHLER: SLURM hat keine GPU über CUDA_VISIBLE_DEVICES zugewiesen."
+    exit 1
+fi
+
+echo "SLURM-Job:  ${SLURM_JOB_ID:-unbekannt}"
+echo "Host:       $(hostname)"
+echo "CUDA-Gerät: ${CUDA_VISIBLE_DEVICES}"
+
+###############################################################################
+# Container-Image bei Bedarf laden
+###############################################################################
+
+if ! podman image exists "${CONTAINER_IMAGE}"; then
+    echo "Container-Image ${CONTAINER_IMAGE} ist auf $(hostname) nicht vorhanden."
+    echo "Lade Image aus ${CONTAINER_ARCHIVE} ..."
+
+    if [[ ! -f "${CONTAINER_ARCHIVE}" ]]; then
+        echo "FEHLER: Container-Archiv nicht gefunden:"
+        echo "        ${CONTAINER_ARCHIVE}"
+        exit 1
+    fi
+
+    podman load --input "${CONTAINER_ARCHIVE}"
+
+    if ! podman image exists "${CONTAINER_IMAGE}"; then
+        echo "FEHLER: Das erwartete Container-Image wurde nach dem Laden nicht gefunden:"
+        echo "        ${CONTAINER_IMAGE}"
+        exit 1
+    fi
+fi
+
+###############################################################################
+# Sequenzen rekursiv finden
+#
+# Eine Sequenz ist hier ein beliebig tief liegender Ordner, der einen
+# Unterordner "images" besitzt, in dem mindestens einer der Kameraordner
+# 00, 01, 02, 03 oder 04 liegt.
+###############################################################################
+
+mapfile -d '' -t SEQUENCES < <(
+    while IFS= read -r -d '' images_dir; do
+        found_camera=0
+
+        for camera in "${ALLOWED_CAMERAS[@]}"; do
+            if [[ -d "${images_dir}/${camera}" ]]; then
+                found_camera=1
+                break
+            fi
+        done
+
+        if [[ "${found_camera}" -eq 1 ]]; then
+            printf '%s\0' "${images_dir%/images}"
+        fi
+    done < <(
+        find "${DATA_ROOT}" \
+            -type d \
+            -name images \
+            -print0
+    ) | sort -zV
+)
+
+if [[ "${#SEQUENCES[@]}" -eq 0 ]]; then
+    echo "FEHLER: Keine Sequenzen mit images/{00..04} unterhalb von"
+    echo "        ${DATA_ROOT}"
+    exit 1
+fi
+
+echo
+echo "Es wurden ${#SEQUENCES[@]} mögliche Sequenzen gefunden:"
+for seq_dir in "${SEQUENCES[@]}"; do
+    if [[ "${seq_dir}" == "${DATA_ROOT}" ]]; then
+        echo "  - ."
+    else
+        echo "  - ${seq_dir#"${DATA_ROOT}/"}"
+    fi
+done
+
+###############################################################################
+# Eine einzelne Sequenz verarbeiten
+#
+# Die Funktion läuft in einer Subshell. Jeder Fehler beendet nur diese eine
+# Sequenz; die äußere Schleife macht danach mit der nächsten weiter.
+###############################################################################
+
+process_sequence() (
+    set -Eeuo pipefail
+
+    local SEQ_DIR="$1"
+    local SEQUENCE_INDEX="$2"
+
+    local SEQ_REL
+    if [[ "${SEQ_DIR}" == "${DATA_ROOT}" ]]; then
+        SEQ_REL="."
+    else
+        SEQ_REL="${SEQ_DIR#"${DATA_ROOT}/"}"
+    fi
+
+    local HOST_SEQ_OUTPUT="${HOST_OUTPUT_ROOT}/${SEQ_REL}"
+    local CONTAINER_SEQ_OUTPUT="${CONTAINER_OUTPUT_ROOT}/${SEQ_REL}"
+
+    ###########################################################################
+    # Sequenzstruktur und Kameraparameter prüfen
+    ###########################################################################
+
+    if [[ ! -d "${SEQ_DIR}/images" ]]; then
+        echo "FEHLER: images-Verzeichnis fehlt:"
+        echo "        ${SEQ_DIR}/images"
+        exit 1
+    fi
+
+    for parameter_file in intri.yml extri.yml; do
+        if [[ ! -s "${SEQ_DIR}/${parameter_file}" ]]; then
+            echo "FEHLER: Kameraparameter fehlt oder ist leer:"
+            echo "        ${SEQ_DIR}/${parameter_file}"
+            exit 1
+        fi
+    done
+
+    ###########################################################################
+    # Nur tatsächlich vorhandene Kameras aus 00..04 auswählen
+    ###########################################################################
+
+    local -a CAMERAS=()
+    local camera
+
+    for camera in "${ALLOWED_CAMERAS[@]}"; do
+        if [[ -d "${SEQ_DIR}/images/${camera}" ]]; then
+            CAMERAS+=("${camera}")
+        fi
+    done
+
+    if [[ "${#CAMERAS[@]}" -lt "${MIN_CAMERAS}" ]]; then
+        echo "FEHLER: Zu wenige Kameras für Mehrkamera-Rekonstruktion."
+        echo "        Gefunden: ${#CAMERAS[@]}"
+        echo "        Kameras:   ${CAMERAS[*]:-keine}"
+        exit 1
+    fi
+
+    ###########################################################################
+    # PNG-Frames prüfen: alle verwendeten Kameras müssen dieselben Frames haben
+    ###########################################################################
+
+    local -a REFERENCE_FRAMES=()
+    local -a FRAME_FILES=()
+    local CAMERA_INDEX
+    local FRAME_INDEX
+    local camera_dir
+
+    for CAMERA_INDEX in "${!CAMERAS[@]}"; do
+        camera="${CAMERAS[$CAMERA_INDEX]}"
+        camera_dir="${SEQ_DIR}/images/${camera}"
+
+        mapfile -t FRAME_FILES < <(
+            find "${camera_dir}" \
+                -maxdepth 1 \
+                -type f \
+                -name '*.png' \
+                -printf '%f\n' |
+            sort -V
+        )
+
+        if [[ "${#FRAME_FILES[@]}" -eq 0 ]]; then
+            echo "FEHLER: Keine PNG-Dateien gefunden in:"
+            echo "        ${camera_dir}"
+            exit 1
+        fi
+
+        if [[ "${CAMERA_INDEX}" -eq 0 ]]; then
+            REFERENCE_FRAMES=("${FRAME_FILES[@]}")
+        else
+            if [[ "${#FRAME_FILES[@]}" -ne "${#REFERENCE_FRAMES[@]}" ]]; then
+                echo "FEHLER: Unterschiedliche Anzahl von PNG-Frames."
+                echo "        Referenzkamera ${CAMERAS[0]}: ${#REFERENCE_FRAMES[@]}"
+                echo "        Kamera ${camera}: ${#FRAME_FILES[@]}"
+                exit 1
+            fi
+
+            for FRAME_INDEX in "${!REFERENCE_FRAMES[@]}"; do
+                if [[ "${FRAME_FILES[$FRAME_INDEX]}" != "${REFERENCE_FRAMES[$FRAME_INDEX]}" ]]; then
+                    echo "FEHLER: Die Kameras enthalten nicht dieselben PNG-Dateien."
+                    echo "        Referenzkamera ${CAMERAS[0]}: ${REFERENCE_FRAMES[$FRAME_INDEX]}"
+                    echo "        Kamera ${camera}: ${FRAME_FILES[$FRAME_INDEX]}"
+                    exit 1
+                fi
+            done
+        fi
+    done
+
+    ###########################################################################
+    # Lückenlosen Frame-Bereich bestimmen
+    ###########################################################################
+
+    local FRAME_START=""
+    local frame_file
+    local frame_stem
+    local frame_number
+    local expected_frame
+
+    for FRAME_INDEX in "${!REFERENCE_FRAMES[@]}"; do
+        frame_file="${REFERENCE_FRAMES[$FRAME_INDEX]}"
+        frame_stem="${frame_file%.png}"
+
+        if [[ ! "${frame_stem}" =~ ^[0-9]+$ ]]; then
+            echo "FEHLER: PNG-Dateiname ist nicht rein numerisch:"
+            echo "        ${SEQ_DIR}/images/${CAMERAS[0]}/${frame_file}"
+            exit 1
+        fi
+
+        frame_number=$((10#${frame_stem}))
+
+        if [[ "${FRAME_INDEX}" -eq 0 ]]; then
+            FRAME_START="${frame_number}"
+        else
+            expected_frame=$((FRAME_START + FRAME_INDEX))
+
+            if [[ "${frame_number}" -ne "${expected_frame}" ]]; then
+                echo "FEHLER: Die PNG-Frames sind nicht lückenlos nummeriert."
+                echo "        Erwarteter Frame: ${expected_frame}"
+                echo "        Gefundene Datei:  ${frame_file}"
+                exit 1
+            fi
+        fi
+    done
+
+    local FRAME_COUNT="${#REFERENCE_FRAMES[@]}"
+    local FRAME_END=$((FRAME_START + FRAME_COUNT))
+
+    local -a VIS_CAMERAS=("${CAMERAS[@]:0:2}")
+    local CAMERA_LIST="${CAMERAS[*]}"
+    local VIS_CAMERA_LIST="${VIS_CAMERAS[*]}"
+
+    echo "Kameras:         ${CAMERA_LIST}"
+    echo "PNG-Frames:      ${FRAME_COUNT}"
+    echo "Frame-Bereich:   ${FRAME_START} bis $((FRAME_END - 1))"
+    echo "Ausgabe:         ${HOST_SEQ_OUTPUT}"
+
+    mkdir -p "${HOST_SEQ_OUTPUT}"
+
+    ###########################################################################
+    # Eindeutigen Container-Namen bilden
+    ###########################################################################
+
+    local SEQ_NAME_SAFE="${SEQ_REL//\//-}"
+    SEQ_NAME_SAFE="${SEQ_NAME_SAFE//./root}"
+
+    local CURRENT_CONTAINER_NAME="easymocap-${SLURM_JOB_ID:-job}-${SEQUENCE_INDEX}-${SEQ_NAME_SAFE}"
+
+    cleanup_sequence_container() {
+        podman rm -f "${CURRENT_CONTAINER_NAME}" >/dev/null 2>&1 || true
+    }
+    trap cleanup_sequence_container EXIT INT TERM
+
+    ###########################################################################
+    # EasyMocap im Container ausführen
+    ###########################################################################
+
+    podman run \
+        --rm \
+        --name "${CURRENT_CONTAINER_NAME}" \
+        -v /mnt:/mnt:rw \
+        -v /tmp:/tmp:rw \
+        -v "${HOST_OUTPUT_ROOT}:${CONTAINER_OUTPUT_ROOT}:rw" \
+        -w /opt/EasyMocap \
+        --device="nvidia.com/gpu=${CUDA_VISIBLE_DEVICES}" \
+        -e "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES}" \
+        -e "NVIDIA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES}" \
+        -e PYOPENGL_PLATFORM=egl \
+        -e "SEQ_DIR=${SEQ_DIR}" \
+        -e "SEQ_REL=${SEQ_REL}" \
+        -e "OUTPUT_DIR=${CONTAINER_SEQ_OUTPUT}" \
+        -e "CAMERA_LIST=${CAMERA_LIST}" \
+        -e "VIS_CAMERA_LIST=${VIS_CAMERA_LIST}" \
+        -e "FRAME_START=${FRAME_START}" \
+        -e "FRAME_END=${FRAME_END}" \
+        --network=host \
+        "${CONTAINER_IMAGE}" \
+        bash -lc '
+            set -Eeuo pipefail
+
+            DATA="${SEQ_DIR}"
+            SMPL_DIR="${OUTPUT_DIR}/smpl"
+            MESH_DIR="${OUTPUT_DIR}/meshes"
+            CFG="config/model/smpl_neutral_custom.yml"
+
+            read -r -a SUBS <<< "${CAMERA_LIST}"
+            read -r -a SUBS_VIS <<< "${VIS_CAMERA_LIST}"
+
+            echo "============================================================"
+            echo "EasyMocap-Verzeichnis: $(pwd)"
+            echo "Eingabesequenz:        ${DATA}"
+            echo "Ausgabeverzeichnis:    ${OUTPUT_DIR}"
+            echo "Kameras:                ${CAMERA_LIST}"
+            echo "Frame-Bereich:          ${FRAME_START} bis $((FRAME_END - 1))"
+            echo "CUDA_VISIBLE_DEVICES:  ${CUDA_VISIBLE_DEVICES:-nicht gesetzt}"
+            echo "============================================================"
+
+            python -c "
+import torch
+print(\"PyTorch CUDA verfügbar:\", torch.cuda.is_available())
+print(\"Sichtbare GPUs:\", torch.cuda.device_count())
+if not torch.cuda.is_available():
+    raise SystemExit(\"FEHLER: CUDA ist im Container nicht verfügbar\")
+"
+
+            mkdir -p "${OUTPUT_DIR}" "${MESH_DIR}"
+
+            echo
+            echo "Starte Keypoint-Erkennung und SMPL-Rekonstruktion ..."
+
+            emc \
+                --data config/datasets/mvimage.yml \
+                --exp config/mv1p/detect_triangulate_fitSMPL.yml \
+                --root "${DATA}" \
+                --cameras "${DATA}" \
+                --out "${OUTPUT_DIR}" \
+                --subs "${SUBS[@]}" \
+                --subs_vis "${SUBS_VIS[@]}" \
+                --ranges "${FRAME_START}" "${FRAME_END}" 1 \
+                --skip_vis
+
+            if [[ ! -d "${SMPL_DIR}" ]]; then
+                echo "FEHLER: EasyMocap hat keinen SMPL-Ordner erzeugt:"
+                echo "        ${SMPL_DIR}"
+                exit 1
+            fi
+
+            SMPL_COUNT="$(find "${SMPL_DIR}" -type f -name "*.json" | wc -l)"
+
+            if [[ "${SMPL_COUNT}" -eq 0 ]]; then
+                echo "FEHLER: Keine SMPL-JSON-Dateien gefunden in:"
+                echo "        ${SMPL_DIR}"
+                exit 1
+            fi
+
+            echo "${SMPL_COUNT} SMPL-JSON-Dateien gefunden."
+            echo
+            echo "Erzeuge Mesh-Sequenz ..."
+
+            python apps/postprocess/write_vertices.py \
+                "${SMPL_DIR}" \
+                "${MESH_DIR}" \
+                --cfg_model "${CFG}" \
+                --mode mesh
+
+            MESH_COUNT="$(find "${MESH_DIR}" -type f -name "*.obj" | wc -l)"
+
+            if [[ "${MESH_COUNT}" -eq 0 ]]; then
+                echo "FEHLER: Keine OBJ-Meshes erzeugt in:"
+                echo "        ${MESH_DIR}"
+                exit 1
+            fi
+
+            echo
+            echo "============================================================"
+            echo "Sequenz erfolgreich abgeschlossen: ${SEQ_REL}"
+            echo "SMPL-Dateien: ${SMPL_COUNT}"
+            echo "OBJ-Meshes:   ${MESH_COUNT}"
+            echo "Ausgabe:      ${OUTPUT_DIR}"
+            echo "============================================================"
+        '
+
+    # Container ist durch --rm bereits weg. Trap darf beim Verlassen nichts tun.
+    trap - EXIT INT TERM
+)
+
+###############################################################################
+# Alle gefundenen Sequenzen nacheinander verarbeiten
+###############################################################################
+
+TOTAL_SEQUENCES="${#SEQUENCES[@]}"
+SUCCESS_COUNT=0
+FAILED_COUNT=0
+FAILED_SEQUENCES=()
+
+for SEQUENCE_INDEX in "${!SEQUENCES[@]}"; do
+    SEQ_DIR="${SEQUENCES[$SEQUENCE_INDEX]}"
+
+    if [[ "${SEQ_DIR}" == "${DATA_ROOT}" ]]; then
+        SEQ_REL="."
+    else
+        SEQ_REL="${SEQ_DIR#"${DATA_ROOT}/"}"
+    fi
+
+    SEQUENCE_NUMBER=$((SEQUENCE_INDEX + 1))
+
+    echo
+    echo "================================================================"
+    echo "Sequenz ${SEQUENCE_NUMBER}/${TOTAL_SEQUENCES}"
+    echo "Pfad: ${SEQ_REL}"
+    echo "================================================================"
+
+    # Errexit für genau diesen Funktionsaufruf ausschalten. Die Funktion selbst
+    # schaltet es in ihrer Subshell wieder ein. So beendet ein Sequenzfehler
+    # nicht den gesamten Batch-Job.
+    set +e
+    process_sequence "${SEQ_DIR}" "${SEQUENCE_INDEX}"
+    RC=$?
+    set -e
+
+    if [[ "${RC}" -eq 0 ]]; then
+        SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+        echo "OK: ${SEQ_REL}"
+    else
+        FAILED_COUNT=$((FAILED_COUNT + 1))
+        FAILED_SEQUENCES+=("${SEQ_REL}")
+        echo "WARNUNG: Sequenz fehlgeschlagen und wird übersprungen:"
+        echo "         ${SEQ_REL}"
+        echo "         Exit-Code: ${RC}"
+        echo "Weiter mit der nächsten Sequenz ..."
+    fi
+done
+
+###############################################################################
+# Zusammenfassung
+###############################################################################
+
+echo
+echo "================================================================"
+echo "Batch-Verarbeitung abgeschlossen."
+echo "Gefunden:     ${TOTAL_SEQUENCES}"
+echo "Erfolgreich:  ${SUCCESS_COUNT}"
+echo "Fehlgeschlagen/übersprungen: ${FAILED_COUNT}"
+echo "Ergebnisse:   ${HOST_OUTPUT_ROOT}"
+
+if [[ "${FAILED_COUNT}" -gt 0 ]]; then
+    echo
+    echo "Fehlgeschlagene Sequenzen:"
+    printf '  - %s\n' "${FAILED_SEQUENCES[@]}"
+fi
+
+echo "================================================================"
+
+# Absichtlich Exit 0: Einzelne kaputte Sequenzen sollen den gesamten SLURM-Job
+# nicht als fehlgeschlagen markieren. Falls du stattdessen bei Teilfehlern einen
+# Fehlerstatus möchtest, ersetze die nächste Zeile durch: exit "${FAILED_COUNT}"
+exit 0

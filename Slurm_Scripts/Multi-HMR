@@ -1,0 +1,145 @@
+#!/bin/bash
+#SBATCH --job-name=multihmr-all
+#SBATCH --partition=24g
+#SBATCH --qos=students_normal
+#SBATCH --gres=gpu:1
+#SBATCH --nodes=1
+#SBATCH --output=multihmr-%j.out
+#SBATCH --error=multihmr-%j.err
+
+set -euo pipefail
+
+# ============================================================
+# ANPASSEN
+# ============================================================
+
+HOME_ROOT="/mnt/home/timohaubner"
+
+INPUT_ROOT="/mnt/home/timohaubner/projects/HMR/input/Multi-HMR"
+
+OUTPUT_ROOT="/mnt/home/timohaubner/projects/HMR/output"
+
+REPO="/mnt/home/timohaubner/projects/HMR/multiHMR/multi-hmr"
+
+# Deine gespeicherte Podman-TAR
+IMAGE_TAR="/mnt/home/timohaubner/multihmr-working.tar"
+
+# Name des Images, das damals mit podman commit erzeugt wurde
+IMAGE_NAME="localhost/multihmr:working"
+
+MODEL_NAME="multiHMR_896_L"
+FOV="45"
+
+# ============================================================
+
+echo "Loading container image..."
+podman load -i "$IMAGE_TAR"
+
+mkdir -p "$OUTPUT_ROOT"
+
+TMP_ROOT="/tmp/${USER}/multihmr-${SLURM_JOB_ID}"
+mkdir -p "$TMP_ROOT"
+
+cleanup() {
+    rm -rf "$TMP_ROOT"
+}
+trap cleanup EXIT
+
+
+run_container() {
+    podman run --rm \
+        --network=host \
+        --device=nvidia.com/gpu=all \
+        -e CUDA_VISIBLE_DEVICES="$CUDA_VISIBLE_DEVICES" \
+        -e HOME="$HOME_ROOT" \
+        -e PYOPENGL_PLATFORM=egl \
+        -v "$HOME_ROOT:$HOME_ROOT:rw" \
+        -v /tmp:/tmp:rw \
+        -w "$REPO" \
+        "$IMAGE_NAME" \
+        "$@"
+}
+
+
+echo "Searching videos under:"
+echo "$INPUT_ROOT"
+echo
+
+find "$INPUT_ROOT" -type f -iname "*.mp4" -print0 |
+while IFS= read -r -d '' VIDEO; do
+
+    SEQ_DIR="$(dirname "$VIDEO")"
+
+    # z.B.
+    # 00032/longshot_flying_eagle
+    REL_DIR="${SEQ_DIR#"$INPUT_ROOT"/}"
+
+    OUTPUT_DIR="$OUTPUT_ROOT/$REL_DIR"
+
+    mkdir -p "$OUTPUT_DIR"
+
+    echo "============================================================"
+    echo "Video:  $VIDEO"
+    echo "Output: $OUTPUT_DIR"
+
+    # --------------------------------------------------------
+    # Bereits extrahierte Frames verwenden, falls vorhanden
+    # --------------------------------------------------------
+
+    EXISTING_FRAMES="$SEQ_DIR/frames"
+
+    if find "$EXISTING_FRAMES" \
+        -maxdepth 1 \
+        -type f \
+        \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" \) \
+        -print -quit 2>/dev/null | grep -q .; then
+
+        FRAME_DIR="$EXISTING_FRAMES"
+        echo "Using existing frames: $FRAME_DIR"
+
+    else
+
+        # ----------------------------------------------------
+        # Sonst Frames nur temporär nach /tmp extrahieren
+        # ----------------------------------------------------
+
+        FRAME_DIR="$TMP_ROOT/$REL_DIR/frames"
+        mkdir -p "$FRAME_DIR"
+
+        echo "Extracting frames temporarily..."
+
+        run_container \
+            ffmpeg \
+            -hide_banner \
+            -loglevel error \
+            -i "$VIDEO" \
+            -vsync 0 \
+            "$FRAME_DIR/%08d.png"
+    fi
+
+
+    # --------------------------------------------------------
+    # Multi-HMR
+    # --------------------------------------------------------
+
+    echo "Running Multi-HMR..."
+
+    run_container \
+        python demo.py \
+        --img_folder "$FRAME_DIR" \
+        --out_folder "$OUTPUT_DIR" \
+        --model_name "$MODEL_NAME" \
+        --fov "$FOV" \
+        --save_mesh 1
+
+    echo "Finished: $REL_DIR"
+
+    # Temporäre Frames dieser Sequenz direkt löschen
+    if [[ "$FRAME_DIR" == "$TMP_ROOT"* ]]; then
+        rm -rf "$TMP_ROOT/$REL_DIR"
+    fi
+
+done
+
+echo
+echo "All sequences finished."
