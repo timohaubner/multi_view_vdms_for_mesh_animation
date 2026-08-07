@@ -1,0 +1,38 @@
+cape_root: "E:/DLHM/Data/cape_release"
+smpl_root: "E:/DLHM/Data/smpl/models"
+
+
+gt_type: "unclothed"   # "unclothed" oder "clothed"
+
+tracker:
+  name: "wham"
+
+metrics:
+  - mpvpe
+  - root_aligned_mpvpe
+  - pa_mpvpe
+  - mpjpe
+  - per_frame_mpvpe
+  - root_aligned_mpjpe
+  - pa_mpjpe
+  - accel_error
+
+sequences:
+  - subject: "03375"
+    gender: "male"
+    sequence: "blazerlong_babysit_trial2"
+    prediction_path: "E:/DLHM/results/WHAM/Tracking/03375/03375_blazerlong_babysit_trial2_front/wham_output.pkl"
+    export_meshes: False
+
+
+  - subject: "03375"
+    gender: "male"
+    sequence: "longlong_basketball_trial2"
+    prediction_path: "E:/DLHM/results/WHAM/Tracking/03375/03375_longlong_basketball_trial2_front/wham_output.pkl"
+    export_meshes: True
+
+
+output:
+  dir: "benchmark/results/wham"
+  summary_file: "summary.csv"
+  export_meshes_all_sequences: true

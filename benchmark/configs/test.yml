@@ -1,0 +1,26 @@
+cape_root: "E:/DLHM/Data/cape_release"
+smpl_root: "E:/DLHM/Data/smpl/models"
+
+gt_type: "unclothed"
+
+tracker:
+  name: "dmmr"
+
+metrics:
+  - mpvpe
+  - pa_mpvpe
+  - mpjpe
+  - pa_mpjpe
+  - accel
+
+sequences:
+  - subject: "00032"
+    gender: "male"
+    sequence: "longshort_flying_eagle"
+    prediction_path: "E:/DLHM/results/DMMR/FirstRun/Meshes"
+    export_meshes: 
+
+output:
+  dir: "benchmark/results/dmmmr"
+  summary_file: "test.csv"
+  save_per_frame: false

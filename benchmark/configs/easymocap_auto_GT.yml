@@ -1,0 +1,70 @@
+cape_root: "E:/DLHM/Data/cape_release"
+smpl_root: "E:/DLHM/Data/smpl/models"
+
+
+gt_type: "unclothed"
+
+tracker:
+  name: "easymocap"
+  mode: "auto"
+
+metrics:
+  - mpvpe
+  - per_frame_mpvpe
+  - centroid_aligned_mpvpe
+  - per_frame_centroid_aligned_mpvpe
+  - pa_mpvpe
+  - per_frame_pa_mpvpe
+  - mpjpe
+  - per_frame_mpjpe
+  - pelvis_aligned_mpjpe
+  - per_frame_pelvis_aligned_mpjpe
+  - pa_mpjpe
+  - per_frame_pa_mpjpe
+  - accel_error
+  - per_frame_accel_error
+
+output:
+  dir: "benchmark/results/auto/GT"
+  summary_file: "easymocap_auto_GT.csv"
+
+sequences:
+  - subject: "00096"
+    gender: "male"
+    sequence: "jerseyshort_shoulders_mill"
+    prediction_paths:
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run1/GT/00096_jerseyshort_shoulders_mill/meshes"
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run2/GT/00096_jerseyshort_shoulders_mill/meshes"
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run3/GT/00096_jerseyshort_shoulders_mill/meshes"
+
+  - subject: "00096"
+    gender: "male"
+    sequence: "shirtlong_punching"
+    prediction_paths:
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run1/GT/00096_shirtlong_punching/meshes"
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run2/GT/00096_shirtlong_punching/meshes"
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run3/GT/00096_shirtlong_punching/meshes"
+
+  - subject: "00145"
+    gender: "male"
+    sequence: "shortlong_twist_tilt_left"
+    prediction_paths:
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run1/GT/00145_shortlong_twist_tilt_left/meshes"
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run2/GT/00145_shortlong_twist_tilt_left/meshes"
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run3/GT/00145_shortlong_twist_tilt_left/meshes"
+
+  - subject: "00215"
+    gender: "male"
+    sequence: "poloshort_bend_back_and_front"
+    prediction_paths:
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run1/GT/00215_poloshort_bend_back_and_front/meshes"
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run2/GT/00215_poloshort_bend_back_and_front/meshes"
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run3/GT/00215_poloshort_bend_back_and_front/meshes"
+
+  - subject: "00215"
+    gender: "male"
+    sequence: "shortlong_tilt_twist_left"
+    prediction_paths:
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run1/GT/00215_shortlong_tilt_twist_left/meshes"
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run2/GT/00215_shortlong_tilt_twist_left/meshes"
+      - "E:/DLHM/results/EasyMocap/AutoRedo/Run3/GT/00215_shortlong_tilt_twist_left/meshes"

@@ -1,0 +1,32 @@
+cape_root: "E:/DLHM/Data/cape_release"
+smpl_root: "E:/DLHM/Data/smpl/models"
+
+gt_type: "unclothed"
+
+tracker:
+  name: "easymocap"
+
+metrics:
+  - mpvpe
+  - centroid_aligned_mpvpe
+  - pa_mpvpe
+  - mpjpe
+  - centroid_aligned_mpjpe
+  - pa_mpjpe
+  - accel_error
+
+sequences:
+  - subject: "00032"
+    gender: "male"
+    sequence: "longshort_flying_eagle"
+    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00032/longshort_flying_eagle/meshes"
+  - subject: "00032"
+    gender: "male"
+    sequence: "shortlong_hips"
+    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00032/shortlong_hips/meshes"
+
+
+output:
+  dir: "benchmark/asdasd/scratch"
+  summary_file: "stats.csv"
+  export_meshes_all_sequences: false

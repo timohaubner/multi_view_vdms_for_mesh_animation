@@ -1,0 +1,87 @@
+output_path: E:\DLHM\video_evaluation\results\Auto\Run3\EM
+
+videos:
+
+  00096_jerseyshort_shoulders_mill_45:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00096_jerseyshort_shoulders_mill\sv4d2\000000_v001.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00096_jerseyshort_shoulders_mill\45_third.mp4
+
+  00096_jerseyshort_shoulders_mill_90:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00096_jerseyshort_shoulders_mill\sv4d2\000000_v002.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00096_jerseyshort_shoulders_mill\90_third.mp4
+
+  00096_jerseyshort_shoulders_mill_270:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00096_jerseyshort_shoulders_mill\sv4d2\000000_v003.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00096_jerseyshort_shoulders_mill\270_third.mp4
+
+  00096_jerseyshort_shoulders_mill_315:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00096_jerseyshort_shoulders_mill\sv4d2\000000_v004.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00096_jerseyshort_shoulders_mill\315_third.mp4
+
+
+  00096_shirtlong_punching_45:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00096_shirtlong_punching\sv4d2\000000_v001.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00096_shirtlong_punching\45_third.mp4
+
+  00096_shirtlong_punching_90:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00096_shirtlong_punching\sv4d2\000000_v002.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00096_shirtlong_punching\90_third.mp4
+
+  00096_shirtlong_punching_270:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00096_shirtlong_punching\sv4d2\000000_v003.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00096_shirtlong_punching\270_third.mp4
+
+  00096_shirtlong_punching_315:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00096_shirtlong_punching\sv4d2\000000_v004.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00096_shirtlong_punching\315_third.mp4
+
+
+  00145_shortlong_twist_tilt_left_45:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00145_shortlong_twist_tilt_left\sv4d2\000000_v001.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00145_shortlong_twist_tilt_left\45_third.mp4
+
+  00145_shortlong_twist_tilt_left_90:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00145_shortlong_twist_tilt_left\sv4d2\000000_v002.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00145_shortlong_twist_tilt_left\90_third.mp4
+
+  00145_shortlong_twist_tilt_left_270:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00145_shortlong_twist_tilt_left\sv4d2\000000_v003.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00145_shortlong_twist_tilt_left\270_third.mp4
+
+  00145_shortlong_twist_tilt_left_315:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00145_shortlong_twist_tilt_left\sv4d2\000000_v004.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00145_shortlong_twist_tilt_left\315_third.mp4
+
+
+  00215_poloshort_bend_back_and_front_45:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00215_poloshort_bend_back_and_front\sv4d2\000000_v001.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00215_poloshort_bend_back_and_front\45_third.mp4
+
+  00215_poloshort_bend_back_and_front_90:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00215_poloshort_bend_back_and_front\sv4d2\000000_v002.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00215_poloshort_bend_back_and_front\90_third.mp4
+
+  00215_poloshort_bend_back_and_front_270:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00215_poloshort_bend_back_and_front\sv4d2\000000_v003.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00215_poloshort_bend_back_and_front\270_third.mp4
+
+  00215_poloshort_bend_back_and_front_315:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00215_poloshort_bend_back_and_front\sv4d2\000000_v004.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00215_poloshort_bend_back_and_front\315_third.mp4
+
+
+  00215_shortlong_tilt_twist_left_45:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00215_shortlong_tilt_twist_left\sv4d2\000000_v001.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00215_shortlong_tilt_twist_left\45_third.mp4
+
+  00215_shortlong_tilt_twist_left_90:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00215_shortlong_tilt_twist_left\sv4d2\000000_v002.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00215_shortlong_tilt_twist_left\90_third.mp4
+
+  00215_shortlong_tilt_twist_left_270:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00215_shortlong_tilt_twist_left\sv4d2\000000_v003.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00215_shortlong_tilt_twist_left\270_third.mp4
+
+  00215_shortlong_tilt_twist_left_315:
+    prediction: E:\DLHM\results\SV4D2\AutoRedo\Run3\EM\00215_shortlong_tilt_twist_left\sv4d2\000000_v004.mp4
+    gt: E:\DLHM\Data\renderings\AutoRedo\Run1\00215_shortlong_tilt_twist_left\315_third.mp4
