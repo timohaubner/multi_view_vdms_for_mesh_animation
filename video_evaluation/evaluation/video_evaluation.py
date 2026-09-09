@@ -253,8 +253,7 @@ def add_summary_rows(
     """
     Append AVERAGE and STD rows calculated across all result rows.
 
-    STD uses ddof=0, i.e. the population standard deviation. This also yields
-    0.0 for a single result row.
+    STD uses ddof=1, i.e
     """
     metric_columns = ["psnr", "ssim", "lpips"]
 
@@ -267,7 +266,7 @@ def add_summary_rows(
 
     for column in metric_columns:
         average_row[column] = dataframe[column].mean()
-        std_row[column] = dataframe[column].std(ddof=0)
+        std_row[column] = dataframe[column].std(ddof=1)
 
     return pd.concat(
         [
