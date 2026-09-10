@@ -24,7 +24,7 @@ The experiments use motion sequences from the CAPE dataset in a controlled setup
 ├── Slurm_Scripts/          # Scripts for running experiments on a Slurm cluster
 ├── Data/                   # CAPE dataset and renderings (placeholder) 
 ├── results/                # Generated experiment outputs (placeholder)
-├── visualization/          # Visualization utilities and outputs
+├── visualization/          # Visualization outputs (placeholder)
 ├── run_benchmark.py        # Entry point for reconstruction benchmarks
 └── run_video_evaluation.py # Entry point for synthesized-video evaluation
 ```
