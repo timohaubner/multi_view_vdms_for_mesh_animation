@@ -30,6 +30,14 @@ The experiments use motion sequences from the CAPE dataset in a controlled setup
 
 This repository is a research prototype intended for controlled experimentation and evaluation rather than a deployment-ready animation system.
 
-## Documentation
+## Environment Setup
 
-Installation instructions, external dependencies, dataset setup, and commands for reproducing the experiments will be added during the repository cleanup.
+Different stages of the experimental pipeline use separate Conda environments due to their differing software requirements.
+
+The environment specifications are provided in `environments/`:
+
+```text
+environments/
+├── rendering.yml
+├── benchmark.yml
+└── video_evaluation.yml
