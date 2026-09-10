@@ -21,8 +21,8 @@ The experiments use motion sequences from the CAPE dataset in a controlled setup
 ├── video_evaluation/       # Evaluation of synthesized target-view video quality
 ├── sv4d_scripts/           # Scripts and modifications for SV4D-based multi-view synthesis
 ├── scripts/                # Rendering, preprocessing, conversion, and utility scripts
-├── Data/                   # CAPE dataset and renderings (placeholder) 
-├── results/                # Generated experiment outputs (placeholder)
+├── data/                   # CAPE dataset and renderings (placeholder) 
+├── outputs/                # Generated experiment outputs (placeholder)
 ├── visualization/          # Visualization outputs (placeholder)
 ├── run_benchmark.py        # Entry point for reconstruction benchmarks
 └── run_video_evaluation.py # Entry point for synthesized-video evaluation
