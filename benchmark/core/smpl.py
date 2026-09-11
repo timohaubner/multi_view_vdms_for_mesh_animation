@@ -8,25 +8,25 @@ def load_smpl_j_regressor(smpl_model_path: Path) -> np.ndarray:
         raise FileNotFoundError(smpl_model_path)
 
     if smpl_model_path.suffix == ".pkl":
-        with open(smpl_model_path, "rb") as f:
-            smpl_data = pickle.load(f, encoding="latin1")
-            J = smpl_data["J_regressor"]
+        with smpl_model_path.open("rb") as file:
+            smpl_data = pickle.load(file, encoding="latin1")
+            j_regressor = smpl_data["J_regressor"]
     else:
         raise ValueError(f"Unsupported SMPL model format: {smpl_model_path.suffix}")
 
-    if hasattr(J, "toarray"):
-        J = J.toarray()
+    if hasattr(j_regressor, "toarray"):
+        j_regressor = j_regressor.toarray()
 
-    J = np.asarray(J, dtype=np.float32)
+    j_regressor = np.asarray(j_regressor, dtype=np.float32)
 
-    if J.shape != (24, 6890):
-        raise ValueError(f"Expected J_regressor shape (24, 6890), got {J.shape}")
+    if j_regressor.shape != (24, 6890):
+        raise ValueError(f"Expected J_regressor shape (24, 6890), got {j_regressor.shape}")
 
-    return J
+    return j_regressor
 
 
-def vertices_to_joints(vertices: np.ndarray, J_regressor: np.ndarray) -> np.ndarray:
+def vertices_to_joints(vertices: np.ndarray, j_regressor: np.ndarray) -> np.ndarray:
     vertices = np.asarray(vertices, dtype=np.float32)
-    J_regressor = np.asarray(J_regressor, dtype=np.float32)
+    j_regressor = np.asarray(j_regressor, dtype=np.float32)
 
-    return np.einsum("jv,tvc->tjc", J_regressor, vertices)
+    return np.einsum("jv,tvc->tjc", j_regressor, vertices)

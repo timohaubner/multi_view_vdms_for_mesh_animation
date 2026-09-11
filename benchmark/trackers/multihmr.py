@@ -11,11 +11,12 @@ class MultiHMRLoader(BaseTrackerLoader):
     tracker_name = "multihmr"
 
     def __init__(self, smplx2smpl_path: Path):
-        with open(smplx2smpl_path, "rb") as f:
-            data = pickle.load(f, encoding="latin1")
+        with smplx2smpl_path.open("rb") as file:
+            data = pickle.load(file, encoding="latin1")
 
         if isinstance(data, dict):
             matrix = data.get("matrix", data.get("mtx", None))
+
             if matrix is None:
                 raise KeyError(f"Could not find transfer matrix in keys: {data.keys()}")
         else:
@@ -27,7 +28,6 @@ class MultiHMRLoader(BaseTrackerLoader):
         self.smplx2smpl = np.asarray(matrix, dtype=np.float32)
 
     def load(self, prediction_paths: list[Path], subject: str, sequence: str) -> TrackerPrediction:
-
         prediction_path = prediction_paths[0]
 
         files = sorted(prediction_path.glob("*.npy"))[:36]
@@ -40,17 +40,13 @@ class MultiHMRLoader(BaseTrackerLoader):
         for path in files:
             smplx = np.load(path)
 
-            # Multi-HMR speichert typischerweise:
-            # [num_people, 10475, 3]
             if smplx.ndim == 2:
                 smplx = smplx[None]
 
             if len(smplx) != 1:
                 raise ValueError(f"{path}: expected one person, got {len(smplx)}")
 
-            smplx = smplx[0]  # [10475, 3]
-
-            # [6890, 10475] @ [10475, 3]
+            smplx = smplx[0]
             smpl = self.smplx2smpl @ smplx
 
             vertices.append(smpl)
@@ -59,8 +55,11 @@ class MultiHMRLoader(BaseTrackerLoader):
 
         frame_ids = np.arange(len(files))
 
-        conv = np.asarray([[1, 0, 0], [0, -1, 0], [0, 0, -1]])
-
+        conv = np.asarray([
+            [1, 0, 0],
+            [0, -1, 0],
+            [0, 0, -1],
+        ])
 
         vertices = vertices @ conv
 
@@ -68,7 +67,7 @@ class MultiHMRLoader(BaseTrackerLoader):
             tracker_name=self.tracker_name,
             subject=subject,
             sequence=sequence,
-            vertices=vertices,      # [T, 6890, 3]
+            vertices=vertices,
             frame_ids=frame_ids,
             source_path=prediction_path,
         )

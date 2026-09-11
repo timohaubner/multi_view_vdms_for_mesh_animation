@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
+
 import numpy as np
 
 
@@ -8,8 +9,8 @@ class GTSequence:
     subject: str
     sequence: str
     gender: str
-    vertices: np.ndarray        # (T, 6890, 3)
-    frame_ids: np.ndarray       # (T,)
+    vertices: np.ndarray
+    frame_ids: np.ndarray
     source_path: Path
 
 
@@ -18,8 +19,8 @@ class TrackerPrediction:
     tracker_name: str
     subject: str
     sequence: str
-    vertices: np.ndarray        # (T, 6890, 3)
-    frame_ids: np.ndarray       # (T,)
+    vertices: np.ndarray
+    frame_ids: np.ndarray
     source_path: Path
     joints: np.ndarray | None = None
     confidence: np.ndarray | None = None

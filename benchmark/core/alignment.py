@@ -1,5 +1,6 @@
 import torch
 
+
 def batch_procrustes_align(pred, gt, eps: float = 1e-8):
     pred = torch.as_tensor(pred, dtype=torch.float32)
     gt = torch.as_tensor(gt, dtype=torch.float32)
@@ -30,19 +31,8 @@ def batch_procrustes_align(pred, gt, eps: float = 1e-8):
     scale = scale / (var_X + eps)
 
     aligned = scale * (X @ R.transpose(1, 2)) + mu_gt
+
     return aligned
-
-
-def align_inital_translation(pred_vertices, pred_joints, gt_vertices):
-    pred_initial_centroid = pred_vertices[0].mean(axis=0)
-    gt_initial_centroid = gt_vertices[0].mean(axis=0)
-
-    offset = gt_initial_centroid - pred_initial_centroid
-
-    pred_vertices_aligned = pred_vertices + offset
-    pred_joints_aligned = pred_joints + offset
-
-    return pred_vertices_aligned, pred_joints_aligned
 
 
 def align_global_translation(pred_vertices, pred_joints, gt_vertices):
@@ -60,15 +50,16 @@ def centroid_align(pred_vertices, pred_joints, gt_vertices):
 
     centroid_offset = gt_centroid - pred_centroid
 
-    pred_vertices_aligned = (pred_vertices + centroid_offset[:, None, :])
-    pred_joints_aligned = (pred_joints + centroid_offset[:, None, :])
+    pred_vertices_aligned = pred_vertices + centroid_offset[:, None, :]
+    pred_joints_aligned = pred_joints + centroid_offset[:, None, :]
 
     return pred_vertices_aligned, pred_joints_aligned
+
 
 def pelvis_align(pred_vertices, pred_joints, gt_joints):
     pelvis_offset = gt_joints[:, 0, :] - pred_joints[:, 0, :]
 
-    pred_vertices_aligned = (pred_vertices + pelvis_offset[:, None, :])
-    pred_joints_aligned = (pred_joints + pelvis_offset[:, None, :])
+    pred_vertices_aligned = pred_vertices + pelvis_offset[:, None, :]
+    pred_joints_aligned = pred_joints + pelvis_offset[:, None, :]
 
     return pred_vertices_aligned, pred_joints_aligned

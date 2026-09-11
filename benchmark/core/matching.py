@@ -3,18 +3,14 @@ import numpy as np
 from benchmark.core.types import GTSequence, TrackerPrediction, MatchedSequence
 
 
-#Hier werden die gt.frame_ids nicht benutzt. Für WHAM egal, bei anderen Trackern nochmal gedanken darüber machen!!
 def match_by_frame_ids(gt: GTSequence, pred: TrackerPrediction, allow_drop_invalid: bool = False, matching_strategy="default") -> MatchedSequence:
-
     frame_ids = np.asarray(pred.frame_ids, dtype=int)
 
     if pred.tracker_name == "wham":
-
         if matching_strategy == "sparse_frames":
             frame_ids = np.arange(36) * 3
 
             pred_vertices = pred.vertices[frame_ids]
-
             gt_vertices = gt.vertices[frame_ids]
             gt_vertices = np.asarray(gt_vertices, dtype=np.float32)
 
@@ -34,6 +30,7 @@ def match_by_frame_ids(gt: GTSequence, pred: TrackerPrediction, allow_drop_inval
                 frame_ids = frame_ids[valid]
                 pred_vertices = pred.vertices[valid]
                 strategy = "frame_ids_drop_invalid"
+
             else:
                 pred_vertices = pred.vertices
                 strategy = "frame_ids"
@@ -41,15 +38,18 @@ def match_by_frame_ids(gt: GTSequence, pred: TrackerPrediction, allow_drop_inval
             gt_vertices = gt.vertices[frame_ids]
 
     elif pred.tracker_name == "multihmr":
+        if matching_strategy != "sparse_frames":
+            raise ValueError(f"Unsupported matching strategy for Multi-HMR: {matching_strategy}")
 
-        if matching_strategy == "sparse_frames":
-            frame_ids = np.arange(36) * 3
-            pred_vertices = pred.vertices[np.arange(36)]
-            gt_vertices = gt.vertices[frame_ids]
-            gt_vertices = np.asarray(gt_vertices, dtype=np.float32)
-            strategy = "sparse_frames"
+        frame_ids = np.arange(36) * 3
 
-    elif pred.tracker_name in ("dmmr", "easymocap"):
+        pred_vertices = pred.vertices[np.arange(36)]
+        gt_vertices = gt.vertices[frame_ids]
+        gt_vertices = np.asarray(gt_vertices, dtype=np.float32)
+
+        strategy = "sparse_frames"
+
+    elif pred.tracker_name == "easymocap":
         pred_vertices = pred.vertices
 
         gt_vertices = gt.vertices[frame_ids]

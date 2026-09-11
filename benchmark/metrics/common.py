@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 
+
 def point_error_mm(pred, gt) -> dict:
     pred = torch.as_tensor(pred, dtype=torch.float32)
     gt = torch.as_tensor(gt, dtype=torch.float32)
@@ -16,7 +17,6 @@ def point_error_mm(pred, gt) -> dict:
 
 
 def acceleration_error_mm(pred_joints, gt_joints):
-
     pred_joints = np.asarray(pred_joints, dtype=np.float32)
     gt_joints = np.asarray(gt_joints, dtype=np.float32)
 
@@ -32,53 +32,8 @@ def acceleration_error_mm(pred_joints, gt_joints):
     pred_acc = pred_joints[2:] - 2 * pred_joints[1:-1] + pred_joints[:-2]
     gt_acc = gt_joints[2:] - 2 * gt_joints[1:-1] + gt_joints[:-2]
 
-
     err = np.linalg.norm(pred_acc - gt_acc, axis=-1)
     per_frame = err.mean(axis=1) * 1000.0
-    per_frame = per_frame[1:-1]
-
-    return {
-        "mean": float(per_frame.mean()),
-        "median": float(np.median(per_frame)),
-        "per_frame": per_frame,
-    }
-
-
-def acceleration_error_m_backup(pred_joints, gt_joints, fps=20):
-    """
-    WHAM-artiger Acceleration Error für SMPL-Joints.
-
-    pred_joints, gt_joints: [T, J, 3]
-    SMPL-Pelvis/Root liegt an Joint-Index 0.
-    """
-    pred_joints = np.asarray(pred_joints, dtype=np.float64)
-    gt_joints = np.asarray(gt_joints, dtype=np.float64)
-
-    assert pred_joints.shape == gt_joints.shape
-    assert pred_joints.ndim == 3
-
-    if pred_joints.shape[0] < 5:
-        return {
-            "mean": np.nan,
-            "median": np.nan,
-            "per_frame": np.array([]),
-        }
-
-    # Prediction und GT pro Frame am eigenen SMPL-Pelvis zentrieren
-    pred_joints = pred_joints - pred_joints[:, 0:1, :]
-    gt_joints = gt_joints - gt_joints[:, 0:1, :]
-
-    pred_acc = (pred_joints[2:] - 2.0 * pred_joints[1:-1] + pred_joints[:-2]) * fps**2
-
-    gt_acc = (
-        gt_joints[2:]
-        - 2.0 * gt_joints[1:-1]
-        + gt_joints[:-2]
-    ) * fps**2
-
-    per_frame = np.linalg.norm(pred_acc - gt_acc, axis=-1).mean(axis=1)
-
-    # WHAM entfernt zusätzlich die beiden äußeren Werte
     per_frame = per_frame[1:-1]
 
     return {

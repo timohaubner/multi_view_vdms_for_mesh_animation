@@ -1,0 +1,35 @@
+cape_root: "${CAPE_ROOT}"
+smpl_root: "${SMPL_ROOT}"
+
+gt_type: "unclothed"
+
+tracker:
+  name: "easymocap"
+  prediction_root: "${EASYMOCAP_RESULTS}/ExampleRun"
+  prediction_subdir: "meshes"
+
+metrics:
+  - mpvpe
+  - centroid_aligned_mpvpe
+  - pelvis_aligned_mpvpe
+  - pa_mpvpe
+  - mpjpe
+  - centroid_aligned_mpjpe
+  - pelvis_aligned_mpjpe
+  - pa_mpjpe
+  - accel_error
+
+output:
+  dir: "benchmark/results/example"
+  summary_file: "example_stats.csv"
+  export_meshes_all_sequences: false
+
+sequences:
+  - subject: "00032"
+    gender: "male"
+    sequence: "longshort_flying_eagle"
+
+  - subject: "00096"
+    gender: "male"
+    sequence: "shirtlong_punching"
+    export_meshes: true

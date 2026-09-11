@@ -9,21 +9,22 @@ from benchmark.trackers.registry import get_tracker_loader
 from benchmark.evaluation.evaluator import SequenceEvaluator
 from benchmark.core.paths import resolve_path
 
+
 class BenchmarkRunner:
     def __init__(self, config_path: Path):
         with open(config_path, "r") as f:
             self.config = yaml.safe_load(f)
 
         self.cape_root = resolve_path(self.config["cape_root"])
-        self.gt_type = self.config.get("gt_type", "unclothed")
         self.smpl_root = resolve_path(self.config["smpl_root"])
+        self.gt_type = self.config.get("gt_type", "unclothed")
 
         smplx2smpl_path = self.config.get("smplx2smpl_path", None)
+
         if smplx2smpl_path is not None:
             smplx2smpl_path = resolve_path(smplx2smpl_path)
 
         self.output_root = Path(self.config["output"]["dir"])
-        self.output_root.parent.mkdir(parents=True, exist_ok=True)
         self.output_root.mkdir(parents=True, exist_ok=True)
         self.summary_file = self.output_root / self.config["output"]["summary_file"]
 
@@ -32,10 +33,14 @@ class BenchmarkRunner:
 
         j_regressor_male = load_smpl_j_regressor(smpl_male_path)
         j_regressor_female = load_smpl_j_regressor(smpl_female_path)
-        self.evaluator = SequenceEvaluator(j_regressor_male, j_regressor_female)
 
+        self.evaluator = SequenceEvaluator(j_regressor_male, j_regressor_female)
         self.exporter = MeshExporter(smpl_male_path, smpl_female_path, self.output_root)
-        self.export_meshes_all_sequences = self.config["output"].get("export_meshes_all_sequences", False)
+
+        self.export_meshes_all_sequences = self.config["output"].get(
+            "export_meshes_all_sequences",
+            False,
+        )
 
         self.tracker_config = self.config["tracker"]
 
@@ -55,8 +60,16 @@ class BenchmarkRunner:
         prediction_roots = self.tracker_config.get("prediction_roots")
 
         if prediction_roots:
-            sequence_dir_format = self.tracker_config.get("sequence_dir_format", "{subject}/{sequence}")
-            sequence_dir = sequence_dir_format.format(subject=item["subject"], sequence=item["sequence"])
+            sequence_dir_format = self.tracker_config.get(
+                "sequence_dir_format",
+                "{subject}/{sequence}",
+            )
+
+            sequence_dir = sequence_dir_format.format(
+                subject=item["subject"],
+                sequence=item["sequence"],
+            )
+
             prediction_subdir = self.tracker_config.get("prediction_subdir")
             prediction_file = self.tracker_config.get("prediction_file")
 
@@ -81,8 +94,17 @@ class BenchmarkRunner:
             raise ValueError("No prediction path specified.")
 
         prediction_root = resolve_path(prediction_root)
-        sequence_dir_format = self.tracker_config.get("sequence_dir_format", "{subject}/{sequence}")
-        sequence_dir = sequence_dir_format.format(subject=item["subject"], sequence=item["sequence"])
+
+        sequence_dir_format = self.tracker_config.get(
+            "sequence_dir_format",
+            "{subject}/{sequence}",
+        )
+
+        sequence_dir = sequence_dir_format.format(
+            subject=item["subject"],
+            sequence=item["sequence"],
+        )
+
         prediction_path = prediction_root / sequence_dir
 
         prediction_subdir = self.tracker_config.get("prediction_subdir")
@@ -105,15 +127,24 @@ class BenchmarkRunner:
             gender = item["gender"]
 
             export_meshes = item.get("export_meshes", False)
-
             prediction_paths = self._get_prediction_paths(item)
 
             print(f"Evaluating {subject} / {sequence}")
 
             try:
-                gt = load_cape_gt(cape_root=self.cape_root, subject=subject, sequence=sequence, gt_type=self.gt_type, gender=gender)
+                gt = load_cape_gt(
+                    cape_root=self.cape_root,
+                    subject=subject,
+                    sequence=sequence,
+                    gt_type=self.gt_type,
+                    gender=gender,
+                )
 
-                pred = self.tracker_loader.load(prediction_paths=prediction_paths, subject=subject, sequence=sequence)
+                pred = self.tracker_loader.load(
+                    prediction_paths=prediction_paths,
+                    subject=subject,
+                    sequence=sequence,
+                )
 
                 result = self.evaluator.evaluate(gt, pred, gender, self.mode)
 
@@ -132,7 +163,15 @@ class BenchmarkRunner:
                     "error": str(e),
                 }
 
-            selected_keys = ["subject", "sequence", "tracker", "num_matched_frames", *self.metrics, "status", "error"]
+            selected_keys = [
+                "subject",
+                "sequence",
+                "tracker",
+                "num_matched_frames",
+                *self.metrics,
+                "status",
+                "error",
+            ]
 
             rows.append({
                 key: result.get(key)
@@ -140,7 +179,12 @@ class BenchmarkRunner:
             })
 
         df = pd.DataFrame(rows)
-        numeric_cols = [metric for metric in self.metrics if metric in df.columns and metric[:9] != "per_frame"]
+
+        numeric_cols = [
+            metric
+            for metric in self.metrics
+            if metric in df.columns and not metric.startswith("per_frame")
+        ]
 
         for col in numeric_cols:
             df[col] = pd.to_numeric(df[col], errors="coerce")
@@ -155,8 +199,10 @@ class BenchmarkRunner:
             avg_row[col] = df[col].mean()
             sd_row[col] = df[col].std()
 
-        df = pd.concat([df, pd.DataFrame([avg_row, sd_row])],ignore_index=True)
-
+        df = pd.concat(
+            [df, pd.DataFrame([avg_row, sd_row])],
+            ignore_index=True,
+        )
 
         df.to_csv(self.summary_file, index=False)
 

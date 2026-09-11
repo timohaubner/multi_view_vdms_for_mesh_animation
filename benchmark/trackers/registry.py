@@ -1,15 +1,14 @@
 from pathlib import Path
 
-from benchmark.trackers.dmmr import DMMRLoader
 from benchmark.trackers.easymocap import EasyMocapLoader
 from benchmark.trackers.wham import WhamLoader
 from benchmark.trackers.multihmr import MultiHMRLoader
 
+
 TRACKER_LOADERS = {
     "wham": WhamLoader,
-    "dmmr": DMMRLoader,
     "easymocap": EasyMocapLoader,
-    "multihmr": MultiHMRLoader
+    "multihmr": MultiHMRLoader,
 }
 
 

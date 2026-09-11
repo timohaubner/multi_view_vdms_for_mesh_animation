@@ -3,8 +3,12 @@ import numpy as np
 from benchmark.core.matching import match_by_frame_ids
 from benchmark.core.smpl import vertices_to_joints
 from benchmark.metrics.common import point_error_mm, acceleration_error_mm
-from benchmark.core.alignment import batch_procrustes_align, align_inital_translation, centroid_align, pelvis_align, \
-align_global_translation
+from benchmark.core.alignment import (
+    batch_procrustes_align,
+    align_global_translation,
+    centroid_align,
+    pelvis_align,
+)
 
 
 class SequenceEvaluator:
@@ -13,13 +17,12 @@ class SequenceEvaluator:
         self.j_regressor_female = j_regressor_female
 
     def evaluate(self, gt, pred, gender, mode="default") -> dict:
-
-        if gender == 'male':
+        if gender == "male":
             j_regressor = self.j_regressor_male
-        elif gender == 'female':
+        elif gender == "female":
             j_regressor = self.j_regressor_female
         else:
-            raise ValueError('Unknown value for "gender"')
+            raise ValueError("Unknown value for \"gender\"")
 
         matched = match_by_frame_ids(gt, pred, matching_strategy=mode)
 
@@ -80,5 +83,5 @@ class SequenceEvaluator:
             "pred_v_centroid_aligned": pred_v_centroid_aligned,
             "pred_v_pelvis_aligned": pred_v_pelvis_aligned,
             "pred_v_pa_aligned": pred_v_pa_aligned,
-            "gt_v": gt_v
+            "gt_v": gt_v,
         }

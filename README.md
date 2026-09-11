@@ -9,9 +9,11 @@ This project investigates whether additional views synthesized by a pretrained m
 The experimental pipeline focuses on two main stages:
 
 1. Multi-view video synthesis using SV4D 2.0 to generate synchronized target-view videos from a reference video.
-2. Multi-view human reconstruction using an EasyMocap-based pipeline to recover an SMPL mesh sequence from the reference and synthesized views.
+2. 3D human reconstruction and evaluation using an EasyMocap-based reconstruction pipeline and additional tracker baselines.
 
-The experiments use motion sequences from the CAPE dataset in a controlled setup, enabling quantitative comparison against known 3D ground truth. The repository also contains evaluation code for reconstruction accuracy, synthesized-view quality, viewpoint configurations, and long-horizon generation with different reconditioning strategies.
+The experiments use motion sequences from the CAPE dataset in a controlled setup, enabling quantitative comparison against known 3D ground truth.
+
+This repository is a research prototype intended for controlled experimentation and evaluation rather than a deployment-ready animation system.
 
 ## Repository Structure
 
@@ -21,18 +23,17 @@ The experiments use motion sequences from the CAPE dataset in a controlled setup
 ├── video_evaluation/       # Evaluation of synthesized target-view video quality
 ├── sv4d_scripts/           # Scripts and modifications for SV4D-based multi-view synthesis
 ├── scripts/                # Rendering, preprocessing, conversion, and utility scripts
-├── data/                   # CAPE dataset and renderings (placeholder)
-├── outputs/                # Generated experiment outputs (placeholder)
-├── visualization/          # Visualization outputs (placeholder)
+├── environments/           # Conda environment definitions
+├── data/                   # Dataset and rendering data
+├── outputs/                # Generated experiment outputs
+├── visualization/          # Visualization outputs
 ├── run_benchmark.py        # Entry point for reconstruction benchmarks
 └── run_video_evaluation.py # Entry point for synthesized-video evaluation
 ```
 
-This repository is a research prototype intended for controlled experimentation and evaluation rather than a deployment-ready animation system.
+## Environments
 
-## Environment Setup
-
-Different stages of the experimental pipeline use separate Conda environments.
+Different stages of the pipeline use separate Conda environments:
 
 ```text
 environments/
@@ -41,23 +42,26 @@ environments/
 └── video_evaluation.yml
 ```
 
-## Running the Benchmark
-
-Set the required environment variables for the tracker you want to evaluate:
-
-```text
-CAPE_ROOT
-SMPL_ROOT
-SMPLX2SMPL_PATH
-EASYMOCAP_RESULTS
-WHAM_RESULTS
-MULTIHMR_RESULTS
-```
-
-Then run a benchmark config from the repository root:
+For example:
 
 ```bash
-python run_benchmark.py benchmark/configs/wham.yml
+conda env create -f environments/benchmark.yml
 ```
 
-Replace `wham.yml` with the config you want to evaluate.
+## Documentation
+
+More detailed instructions are kept with the corresponding part of the repository.
+
+- [`benchmark/README.md`](benchmark/README.md) — reconstruction benchmark
+- `video_evaluation/` — synthesized-video evaluation
+- `sv4d_scripts/` — SV4D-based multi-view generation
+
+## Benchmark
+
+Reconstruction benchmarks are run through:
+
+```bash
+python run_benchmark.py <config>
+```
+
+See [`benchmark/README.md`](benchmark/README.md) for the available configurations and required environment variables.

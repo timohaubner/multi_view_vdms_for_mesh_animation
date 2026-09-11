@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from benchmark.core.types import TrackerPrediction
 
 
