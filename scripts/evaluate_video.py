@@ -1,21 +1,17 @@
-from pathlib import Path
 import argparse
+from pathlib import Path
 
 import cv2
 import pandas as pd
 import torch
-
 from torchmetrics.functional.image import (
     peak_signal_noise_ratio,
     structural_similarity_index_measure,
 )
-from torchmetrics.image.lpip import (
-    LearnedPerceptualImagePatchSimilarity,
-)
+from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
 
 
 def frame_to_tensor(frame, device):
-    """Convert an OpenCV BGR frame to a normalized RGB tensor."""
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
     tensor = torch.from_numpy(frame_rgb)
@@ -33,14 +29,13 @@ def evaluate_video(generated_path, gt_path, output_csv):
 
     if not generated_capture.isOpened():
         raise RuntimeError(
-            f"Generiertes Video konnte nicht geöffnet werden: "
-            f"{generated_path}"
+            f"Could not open generated video: {generated_path}"
         )
 
     if not gt_capture.isOpened():
         generated_capture.release()
         raise RuntimeError(
-            f"GT-Video konnte nicht geöffnet werden: {gt_path}"
+            f"Could not open ground-truth video: {gt_path}"
         )
 
     generated_frame_count = int(
@@ -55,7 +50,6 @@ def evaluate_video(generated_path, gt_path, output_csv):
         normalize=True,
         reduction="none",
     ).to(device)
-
     lpips_metric.eval()
 
     results = []
@@ -64,21 +58,17 @@ def evaluate_video(generated_path, gt_path, output_csv):
     try:
         with torch.inference_mode():
             while True:
-                generated_ok, generated_frame = (
-                    generated_capture.read()
-                )
+                generated_ok, generated_frame = generated_capture.read()
                 gt_ok, gt_frame = gt_capture.read()
 
-                # Sobald eines der Videos endet, wird die Auswertung beendet.
                 if not generated_ok or not gt_ok:
                     break
 
                 if generated_frame.shape != gt_frame.shape:
                     raise ValueError(
-                        f"Unterschiedliche Auflösung bei Frame "
-                        f"{frame_index}: "
+                        f"Different frame shapes at frame {frame_index}: "
                         f"generated={generated_frame.shape}, "
-                        f"GT={gt_frame.shape}"
+                        f"gt={gt_frame.shape}"
                     )
 
                 generated_tensor = frame_to_tensor(
@@ -95,13 +85,11 @@ def evaluate_video(generated_path, gt_path, output_csv):
                     gt_tensor,
                     data_range=1.0,
                 )
-
                 ssim = structural_similarity_index_measure(
                     generated_tensor,
                     gt_tensor,
                     data_range=1.0,
                 )
-
                 lpips = lpips_metric(
                     generated_tensor,
                     gt_tensor,
@@ -123,7 +111,7 @@ def evaluate_video(generated_path, gt_path, output_csv):
         gt_capture.release()
 
     if not results:
-        raise RuntimeError("Es wurden keine Frames ausgewertet.")
+        raise RuntimeError("No frames were evaluated.")
 
     dataframe = pd.DataFrame(results)
 
@@ -134,17 +122,17 @@ def evaluate_video(generated_path, gt_path, output_csv):
     dataframe.to_csv(output_csv, index=False)
 
     print()
-    print(f"Generated Frames laut Metadaten: {generated_frame_count}")
-    print(f"GT Frames laut Metadaten:        {gt_frame_count}")
-    print(f"Ausgewertete Frames:             {len(dataframe)}")
-    print(f"Gerät:                           {device}")
+    print(f"Generated frames: {generated_frame_count}")
+    print(f"Ground-truth frames: {gt_frame_count}")
+    print(f"Evaluated frames: {len(dataframe)}")
+    print(f"Device: {device}")
     print()
-    print("Mittelwerte:")
+    print("Mean values:")
     print(f"PSNR:  {dataframe['psnr'].mean():.4f} dB")
     print(f"SSIM:  {dataframe['ssim'].mean():.4f}")
     print(f"LPIPS: {dataframe['lpips'].mean():.4f}")
     print()
-    print(f"Frameweise Ergebnisse: {output_csv}")
+    print(f"Per-frame results: {output_csv}")
 
 
 def main():

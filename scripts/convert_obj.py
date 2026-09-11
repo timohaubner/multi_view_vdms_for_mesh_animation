@@ -10,20 +10,13 @@ def write_obj(
     vertices: np.ndarray,
     faces: np.ndarray,
 ) -> None:
-    """
-    Speichert ein Dreiecks-Mesh als OBJ.
-
-    vertices: (V, 3)
-    faces:    (F, 3), 0-basierte Indizes
-    """
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    with open(output_path, "w", encoding="utf-8") as file:
-        # Vertices schreiben
+    with output_path.open("w", encoding="utf-8") as file:
         for x, y, z in vertices:
             file.write(f"v {x:.8f} {y:.8f} {z:.8f}\n")
 
-        # OBJ verwendet 1-basierte Vertex-Indizes
+        # OBJ indices are 1-based
         for i, j, k in faces:
             file.write(f"f {i + 1} {j + 1} {k + 1}\n")
 
@@ -36,16 +29,13 @@ def npy_to_obj_sequence(
 ) -> None:
     vertices = np.load(npy_path)
 
-    # Unterstützt sowohl:
-    # (6890, 3)    -> einzelner Frame
-    # (T, 6890, 3) -> Sequenz
     if vertices.ndim == 2:
         vertices = vertices[None, ...]
 
     if vertices.ndim != 3 or vertices.shape[-1] != 3:
         raise ValueError(
-            f"Unerwartete Vertex-Form: {vertices.shape}. "
-            "Erwartet wird (V, 3) oder (T, V, 3)."
+            f"Unexpected vertex shape: {vertices.shape}. "
+            "Expected (V, 3) or (T, V, 3)."
         )
 
     smpl = SMPL(
@@ -70,9 +60,9 @@ def npy_to_obj_sequence(
             faces=faces,
         )
 
-        print(f"\rGespeichert: {frame_idx + 1}/{len(vertices)}", end="")
+        print(f"\rSaved: {frame_idx + 1}/{len(vertices)}", end="")
 
-    print(f"\nOBJ-Sequenz gespeichert unter:\n{output_dir}")
+    print(f"\nOBJ sequence saved to:\n{output_dir}")
 
 
 if __name__ == "__main__":
@@ -82,22 +72,19 @@ if __name__ == "__main__":
         "--npy_path",
         type=Path,
         required=True,
-        help="Pfad zur gt_body_vertices_*.npy-Datei",
+        help="Path to the gt_body_vertices_*.npy file",
     )
-
     parser.add_argument(
         "--output_dir",
         type=Path,
         required=True,
-        help="Ausgabeordner für die OBJ-Dateien",
+        help="Output directory for OBJ files",
     )
-
     parser.add_argument(
         "--smpl_model_dir",
         type=Path,
         default=Path(r"E:\DLHM\Data\smpl\models"),
     )
-
     parser.add_argument(
         "--gender",
         choices=["male", "female", "neutral"],

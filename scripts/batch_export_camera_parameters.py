@@ -1,5 +1,5 @@
-from pathlib import Path
 import argparse
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -11,7 +11,6 @@ DEFAULT_YFOV_DEG = 45.0
 
 
 def load_mesh(mesh_path):
-    """Load an OBJ as a single trimesh.Trimesh."""
     mesh = trimesh.load(mesh_path, process=False)
 
     if isinstance(mesh, trimesh.Scene):
@@ -29,7 +28,6 @@ def load_mesh(mesh_path):
 
 
 def get_mesh_center_and_size(mesh_path):
-    """Determine the center and bounding-box diagonal of a mesh."""
     mesh = load_mesh(mesh_path)
 
     center = mesh.bounds.mean(axis=0).astype(np.float64)
@@ -45,7 +43,6 @@ def get_mesh_center_and_size(mesh_path):
 
 
 def get_intrinsics(width, height, yfov_rad):
-    """Create the intrinsic matrix for a vertical field of view."""
     fy = height / (2.0 * np.tan(yfov_rad / 2.0))
     fx = fy
 
@@ -63,15 +60,6 @@ def get_intrinsics(width, height, yfov_rad):
 
 
 def get_camera_position(center, size, azimuth_deg):
-    """
-    Position a camera on a circle around the mesh.
-
-    Convention:
-      0°   = front
-      90°  = right
-      -90° = left
-      180° = back
-    """
     radius = 1.45 * size
     height_offset = 0.25 * size
     azimuth_rad = np.deg2rad(azimuth_deg)
@@ -89,7 +77,6 @@ def get_camera_position(center, size, azimuth_deg):
 
 
 def look_at(camera_position, target, up=None):
-    """Return a camera-to-world pose in OpenGL/pyrender convention."""
     if up is None:
         up = np.array([0.0, 1.0, 0.0], dtype=np.float64)
 
@@ -126,12 +113,6 @@ def look_at(camera_position, target, up=None):
 
 
 def get_extrinsics(center, size, azimuth_deg):
-    """
-    Create OpenCV extrinsics for one camera.
-
-    Convention:
-        X_camera = Rot @ X_world + T
-    """
     camera_position = get_camera_position(
         center=center,
         size=size,
@@ -143,22 +124,15 @@ def get_extrinsics(center, size, azimuth_deg):
         dtype=np.float64,
     )
 
-    # Camera-to-world in OpenGL coordinates.
-    T_wc_gl = look_at(camera_position, target)
+    # Convert OpenGL camera coordinates to OpenCV coordinates.
+    camera_to_world_gl = look_at(camera_position, target)
+    world_to_camera_gl = np.linalg.inv(camera_to_world_gl)
 
-    # World-to-camera in OpenGL coordinates.
-    T_cw_gl = np.linalg.inv(T_wc_gl)
-
-    # OpenGL camera coordinates:
-    #   x right, y up, z backward
-    #
-    # OpenCV camera coordinates:
-    #   x right, y down, z forward
     gl_to_cv = np.diag([1.0, -1.0, -1.0, 1.0])
-    T_cw_cv = gl_to_cv @ T_cw_gl
+    world_to_camera_cv = gl_to_cv @ world_to_camera_gl
 
-    rotation_matrix = T_cw_cv[:3, :3].astype(np.float64)
-    translation = T_cw_cv[:3, 3:4].astype(np.float64)
+    rotation_matrix = world_to_camera_cv[:3, :3].astype(np.float64)
+    translation = world_to_camera_cv[:3, 3:4].astype(np.float64)
 
     rotation_vector, _ = cv2.Rodrigues(rotation_matrix)
 
@@ -170,7 +144,6 @@ def get_extrinsics(center, size, azimuth_deg):
 
 
 def write_opencv_matrix(file, key, matrix):
-    """Write a matrix using OpenCV YAML syntax."""
     matrix = np.asarray(matrix, dtype=np.float64)
 
     if matrix.ndim == 1:
@@ -182,7 +155,8 @@ def write_opencv_matrix(file, key, matrix):
         )
 
     data = ", ".join(
-        f"{value:.12g}" for value in matrix.reshape(-1)
+        f"{value:.12g}"
+        for value in matrix.reshape(-1)
     )
 
     file.write(f"{key}: !!opencv-matrix\n")
@@ -192,8 +166,13 @@ def write_opencv_matrix(file, key, matrix):
     file.write(f"  data: [{data}]\n")
 
 
-def write_intrinsics(output_path, camera_names, K, width, height):
-    """Write the intrinsic parameters for all cameras."""
+def write_intrinsics(
+    output_path,
+    camera_names,
+    K,
+    width,
+    height,
+):
     with output_path.open(
         "w",
         encoding="utf-8",
@@ -230,7 +209,6 @@ def write_intrinsics(output_path, camera_names, K, width, height):
 
 
 def write_extrinsics(output_path, cameras):
-    """Write the extrinsic parameters for all cameras."""
     camera_names = list(cameras.keys())
 
     with output_path.open(
@@ -248,12 +226,20 @@ def write_extrinsics(output_path, cameras):
         file.write("\n")
 
         for name in camera_names:
-            write_opencv_matrix(file, f"R_{name}", cameras[name]["R"])
+            write_opencv_matrix(
+                file,
+                f"R_{name}",
+                cameras[name]["R"],
+            )
 
         file.write("\n")
 
         for name in camera_names:
-            write_opencv_matrix(file, f"T_{name}", cameras[name]["T"])
+            write_opencv_matrix(
+                file,
+                f"T_{name}",
+                cameras[name]["T"],
+            )
 
         file.write("\n")
 
@@ -273,7 +259,6 @@ def export_camera_parameters(
     height,
     yfov_deg,
 ):
-    """Generate intri.yml and extri.yml for one animation."""
     if len(azimuths) != len(CAMERA_NAMES):
         raise ValueError(
             f"Exactly {len(CAMERA_NAMES)} angles are required, "
@@ -334,18 +319,10 @@ def export_camera_parameters(
     return intri_path, extri_path
 
 
-def find_sequence_meshes(sequences_root, pose_folder="posed"):
-    """
-    Find all animation pose folders.
-
-    Expected structure:
-
-        sequences_root/
-            sequence_name/
-                animation_name/
-                    posed/
-                        *.obj
-    """
+def find_sequence_meshes(
+    sequences_root,
+    pose_folder="posed",
+):
     sequences_root = Path(sequences_root)
 
     if not sequences_root.exists():
@@ -416,7 +393,6 @@ def batch_export_camera_parameters(
     pose_folder="posed",
     skip_existing=False,
 ):
-    """Generate camera parameters for all discovered animations."""
     sequences_root = Path(sequences_root)
     output_root = Path(output_root)
 
@@ -505,11 +481,8 @@ def parse_args():
     parser.add_argument(
         "--sequences_root",
         required=True,
-        help=(
-            "Root directory containing sequence and animation folders."
-        ),
+        help="Root directory containing sequence and animation folders.",
     )
-
     parser.add_argument(
         "--output_root",
         required=True,
@@ -518,13 +491,11 @@ def parse_args():
             "<output_root>/<sequence>/<animation>/."
         ),
     )
-
     parser.add_argument(
         "--pose_folder",
         default="posed",
         help="Name of the folder containing OBJ meshes. Default: posed.",
     )
-
     parser.add_argument(
         "--azimuths",
         type=float,
@@ -542,21 +513,18 @@ def parse_args():
             "00, 01, 02, 03, and 04."
         ),
     )
-
     parser.add_argument(
         "--width",
         type=int,
         default=512,
         help="Image width. Default: 512.",
     )
-
     parser.add_argument(
         "--height",
         type=int,
         default=512,
         help="Image height. Default: 512.",
     )
-
     parser.add_argument(
         "--yfov_deg",
         type=float,
@@ -566,7 +534,6 @@ def parse_args():
             f"Default: {DEFAULT_YFOV_DEG:g}."
         ),
     )
-
     parser.add_argument(
         "--skip_existing",
         action="store_true",

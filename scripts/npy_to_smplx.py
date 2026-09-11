@@ -1,23 +1,24 @@
-from pathlib import Path
 import argparse
+from pathlib import Path
+
 import numpy as np
 
 
 def write_obj(path: Path, vertices: np.ndarray, faces: np.ndarray):
-    with path.open("w") as f:
-        for v in vertices:
-            f.write(f"v {v[0]} {v[1]} {v[2]}\n")
+    with path.open("w") as file:
+        for vertex in vertices:
+            file.write(f"v {vertex[0]} {vertex[1]} {vertex[2]}\n")
 
-        # OBJ-Indizes beginnen bei 1
+        # OBJ indices are 1-based
         for face in faces:
             a, b, c = face + 1
-            f.write(f"f {a} {b} {c}\n")
+            file.write(f"f {a} {b} {c}\n")
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", required=True, help="Ordner mit .npy Dateien")
-    parser.add_argument("--smplx", required=True, help="SMPLX_NEUTRAL.npz")
+    parser.add_argument("--input", required=True, help="Directory containing .npy files")
+    parser.add_argument("--smplx", required=True, help="Path to SMPLX_NEUTRAL.npz")
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
 
@@ -31,8 +32,6 @@ def main():
     for npy_path in sorted(input_dir.glob("*.npy")):
         vertices = np.load(npy_path)
 
-        # Möglich:
-        # [10475, 3] oder [num_people, 10475, 3]
         if vertices.ndim == 2:
             vertices = vertices[None]
 
@@ -43,16 +42,15 @@ def main():
         for person_id, person_vertices in enumerate(vertices):
             name = npy_path.name
 
-            # ".png.npy" entfernen
             if name.endswith(".png.npy"):
                 name = name[:-8]
             else:
                 name = npy_path.stem
 
-            out_path = output_dir / f"{name}_person_{person_id:02d}.obj"
+            output_path = output_dir / f"{name}_person_{person_id:02d}.obj"
 
-            write_obj(out_path, person_vertices, faces)
-            print(f"{npy_path.name} -> {out_path}")
+            write_obj(output_path, person_vertices, faces)
+            print(f"{npy_path.name} -> {output_path}")
 
 
 if __name__ == "__main__":
