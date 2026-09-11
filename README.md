@@ -21,7 +21,7 @@ This repository is a research prototype intended for controlled experimentation 
 .
 ├── benchmark/              # 3D reconstruction evaluation, metrics, trackers, and configs
 ├── video_evaluation/       # Evaluation of synthesized target-view video quality
-├── sv4d_scripts/           # Scripts and modifications for SV4D-based multi-view synthesis
+├── sv4d_scripts/           # Modified SV4D 2.0 scripts kept for documentation
 ├── scripts/                # Rendering, preprocessing, conversion, and utility scripts
 ├── environments/           # Conda environment definitions
 ├── data/                   # Dataset and rendering data
@@ -54,7 +54,6 @@ More detailed instructions are kept with the corresponding part of the repositor
 
 - [`benchmark/README.md`](benchmark/README.md) — reconstruction benchmark
 - [`video_evaluation/README.md`](video_evaluation/README.md) — synthesized-video evaluation
-- `sv4d_scripts/` — SV4D-based multi-view generation
 
 ## Benchmark
 
