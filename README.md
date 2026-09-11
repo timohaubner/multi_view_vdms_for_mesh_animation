@@ -55,6 +55,7 @@ More detailed instructions are kept with the corresponding part of the repositor
 - [`benchmark/README.md`](benchmark/README.md) — reconstruction benchmark
 - [`video_evaluation/README.md`](video_evaluation/README.md) — synthesized-video evaluation
 - [`scripts/README.md`](scripts/README.md) — standalone utility scripts used during the experimental workflow
+- `sv4d_scripts/` — modified SV4D 2.0 scripts kept for documentation; they are not intended to be run from this repository
 
 ## Benchmark
 
