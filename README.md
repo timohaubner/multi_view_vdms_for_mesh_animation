@@ -22,20 +22,17 @@ Research code for the project **“Evaluating Multi-View Video Diffusion for Hum
   </tr>
 </table>
 
-This project explores video diffusion as a motion prior for animating humanoid 3D meshes.
-Instead of generating motion directly in 3D, motion is represented through video and
-subsequently recovered as an explicit 3D mesh sequence.
+This project explores video diffusion as an indirect motion representation for 3D mesh animation. 
+Rather than generating motion directly in 3D, human motion is represented through video and subsequently 
+reconstructed as an explicit 3D mesh sequence.
 
-A key limitation of existing video-based animation approaches is that recovering 3D
-motion from a single view is inherently ambiguous due to missing depth information and
-self-occlusions. This project investigates whether a pretrained multi-view video
-diffusion model can synthesize additional viewpoints that provide stronger geometric
-constraints for recovering the underlying human motion.
+Recovering 3D motion from monocular video is inherently ambiguous due to missing depth information and self-occlusions. 
+We investigate whether a pretrained multi-view video diffusion model can synthesize additional synchronized viewpoints 
+that provide stronger geometric constraints for recovering the underlying human motion.
 
-Using **SV4D 2.0** for synchronized novel-view synthesis and an **EasyMocap**-based
-SMPL reconstruction pipeline, the experimental multi-view pipeline achieves
-**58.55 mm MPVPE**, compared with **83.98 mm** for Multi-HMR and **112.57 mm**
-for WHAM on the controlled CAPE evaluation.
+Using **SV4D 2.0** for synchronized novel-view synthesis together with an **EasyMocap**-based SMPL reconstruction pipeline, 
+the proposed multi-view approach reduces MPVPE by **30.3%** compared with **Multi-HMR** and **48.0%** 
+compared with **WHAM** on the controlled CAPE evaluation.
 
 📄 [Full Project Report](docs/ProjectReport.pdf)
 
@@ -45,24 +42,23 @@ for WHAM on the controlled CAPE evaluation.
   <img src="assets/ArchitectureDiagram.svg" width="95%" alt="Architecture overview">
 </p>
 
-The proposed architecture aims to animate a static human mesh from a semantic motion
-description using video diffusion as an indirect motion representation.
+The proposed pipeline uses video diffusion as an intermediate representation for transferring semantically described human motion onto a static humanoid mesh.
 
-A single-view video diffusion model first generates a video-based motion prior from a
-rendering of the input mesh. Instead of reconstructing the animation directly from this
-monocular video, a multi-view video diffusion model synthesizes synchronized observations
-from additional viewpoints. These views are then jointly used by a human-specific
-multi-view reconstruction pipeline to recover the final 3D mesh animation.
+A single-view video diffusion model first generates a video-based motion prior from a rendering of the input mesh. 
+Rather than reconstructing the animation directly from this monocular sequence, 
+a multi-view video diffusion model synthesizes synchronized observations from additional viewpoints. 
+These views are then jointly processed by a human-specific multi-view reconstruction pipeline 
+to recover the final 3D mesh animation.
 
-For the controlled experimental evaluation in this project, the single-view generation
-stage is replaced by rendered motion sequences with known 3D ground truth (CAPE). This
-isolates the multi-view synthesis and reconstruction stages and enables quantitative
-evaluation.
+For the controlled experimental evaluation, the initial single-view generation stage is 
+replaced by rendered motion sequences with known 3D ground truth from CAPE. 
+This isolates the multi-view synthesis and reconstruction stages and enables quantitative evaluation 
+of the effect of synthesized target views.
 
 ## Key Results
 
-The core experiment compares the proposed synthesized multi-view pipeline with the
-single-view human reconstruction methods **WHAM** and **Multi-HMR**.
+The core experiment compares the synthesized multi-view reconstruction pipeline against the single-view human 
+reconstruction methods **WHAM** and **Multi-HMR**.
 
 | Method | MPVPE ↓ [mm] | PA-MPVPE ↓ [mm] | Pelvis-Aligned MPJPE ↓ [mm] | PA-MPJPE ↓ [mm] | Acceleration Error ↓ [mm/frame²] |
 |---|---:|---:|---:|---:|---:|
@@ -71,51 +67,56 @@ single-view human reconstruction methods **WHAM** and **Multi-HMR**.
 | **SV4D 2.0 + EasyMocap (Ours)** | **58.55** | 44.72 | **49.55** | 36.37 | **10.48** |
 
 The synthesized multi-view observations substantially improve reconstruction metrics
-that retain information about **global human motion**. Multi-HMR remains stronger on
+that retain information about global human motion. Multi-HMR remains stronger on
 the Procrustes-aligned metrics, which focus more strongly on local pose accuracy after
 removing global translation, rotation, and scale.
 
+## Contributions
+- Proposed a multi-view video diffusion framework for humanoid mesh animation, using synthesized target views to provide additional geometric constraints for 3D human motion reconstruction.
+- Implemented the corresponding multi-view reconstruction and evaluation pipeline, integrating SV4D 2.0 with EasyMocap-based SMPL reconstruction.
+- Built a benchmarking framework for evaluating EasyMocap, WHAM, and Multi-HMR against CAPE ground-truth mesh sequences using multiple 3D reconstruction and temporal metrics.
+- Designed and conducted experiments on viewpoint spacing, number of synthesized views and target-view conditioning to study their effect on both view synthesis quality and downstream 3D reconstruction.
+- Investigated long-horizon multi-view video generation and developed a mesh-level reconditioning strategy for reducing error accumulation across generation windows.
+
 ## Research Questions
 
-- **RQ1 — Do synthesized target views improve 3D human motion reconstruction?**  
-  Synthesized target views provide useful additional geometric constraints for recovering
-  3D human motion. The proposed pipeline achieves **58.55 mm MPVPE**, compared with
-  **83.98 mm** for Multi-HMR and **112.57 mm** for WHAM, with the main benefit appearing
-  in reconstruction metrics that retain information about global motion.
+<details> <summary><strong>RQ1 — Do synthesized target views improve 3D human motion reconstruction?</strong></summary>
 
-- **RQ2a — How does angular viewpoint spacing affect reconstruction?**  
-  Increasing the angular spacing introduces a trade-off between geometric coverage and
-  synthesis quality. While wider viewpoints provide stronger geometric constraints when synthesis errors are
-  removed using source-rendered views, synthesized-view fidelity decreases at larger offsets.
-  Consequently, the **30° and 45°** configurations outperform the **72°** configuration
-  in downstream reconstruction, with MPVPE increasing from **58.55 mm** at 30° to
-  **68.65 mm** at 72°.
+Synthesized target views provide useful additional geometric constraints for recovering 3D human motion. The proposed pipeline achieves 58.55 mm MPVPE, compared with 83.98 mm for Multi-HMR and 112.57 mm for WHAM, with the main benefit appearing in reconstruction metrics that retain information about global motion.
 
-- **RQ2b — How does the number of views affect reconstruction?**  
-  Additional views can improve reconstruction by providing complementary observations,
-  but the improvement is not monotonic because each synthesized view can also introduce
-  noise or cross-view inconsistencies. The full **five-view configuration** achieves the
-  best overall performance with **58.55 mm MPVPE**, although the improvement over smaller
-  view subsets remains comparatively small.
+</details>
 
-- **RQ3 — Does target-view conditioning improve multi-view synthesis?**  
-  Providing source-rendered conditioning images from the target viewpoints substantially
-  improves both synthesized-view fidelity and temporal stability. LPIPS decreases from
-  **0.1078 to 0.0524**, while downstream reconstruction improves from **66.68 mm to
-  58.55 mm MPVPE**. The stronger improvement in image fidelity than in reconstruction
-  accuracy also indicates that visual similarity alone does not fully capture geometric
-  consistency.
+<details> <summary><strong>RQ2a — How does angular viewpoint spacing affect reconstruction?</strong></summary>
 
-- **RQ4 — Can reconditioning improve long-horizon generation?**  
-  To reduce error accumulation across consecutive generation windows, we propose a
-  **mesh-level reconditioning strategy** that reconstructs the intermediate 3D motion
-  and re-renders it from the target viewpoints before continuing generation. Compared
-  with the native autoregressive continuation of SV4D 2.0, mesh-level reconditioning
-  preserves synthesized-view fidelity better over longer horizons, reaching
-  **0.0920 vs. 0.1014 LPIPS** after the second reconditioning boundary. However, this
-  does not improve downstream reconstruction: the native SV4D 2.0 continuation achieves
-  **66.34 mm MPVPE**, compared with **69.65 mm** for mesh-level reconditioning,
-  leaving reliable long-horizon continuation as a remaining challenge.
+Increasing the angular spacing introduces a trade-off between geometric coverage and synthesis quality. 
+Wider viewpoints provide stronger geometric constraints when synthesis errors are removed using source-rendered views, but synthesized-view fidelity decreases at larger angular offsets.
+Consequently, the 30° and 45° configurations outperform the 72° configuration in downstream reconstruction, with MPVPE increasing from 58.55 mm at 30° to 68.65 mm at 72°.
+
+</details>
+
+<details> <summary><strong>RQ2b — How does the number of views affect reconstruction?</strong></summary>
+
+Additional views can improve reconstruction by providing complementary observations, 
+but the improvement is not monotonic because each synthesized view can also introduce noise or cross-view inconsistencies.
+The full five-view configuration achieves the best overall performance with 58.55 mm MPVPE, although the improvement over smaller view subsets remains comparatively small.
+
+</details>
+
+<details> <summary><strong>RQ3 — Does target-view conditioning improve multi-view synthesis?</strong></summary>
+
+Providing source-rendered conditioning images from the target viewpoints substantially improves both synthesized-view fidelity and temporal stability.
+LPIPS decreases from 0.1078 to 0.0524, while downstream reconstruction improves from 66.68 mm to 58.55 mm MPVPE. 
+The substantially larger improvement in image fidelity than in reconstruction accuracy indicates that visual similarity alone does not fully capture geometric consistency.
+
+</details>
+
+<details> <summary><strong>RQ4 — Can reconditioning improve long-horizon generation?</strong></summary>
+
+To reduce error accumulation across consecutive generation windows, we introduce a mesh-level reconditioning strategy that reconstructs intermediate 3D motion and re-renders it from the target viewpoints before continuing generation.
+Compared with the native autoregressive continuation of SV4D 2.0, mesh-level reconditioning better preserves synthesized-view fidelity over longer horizons, reaching 0.0920 vs. 0.1014 LPIPS after the second reconditioning boundary.
+However, this improvement does not translate into better downstream reconstruction: native SV4D 2.0 continuation achieves 66.34 mm MPVPE, compared with 69.65 mm for mesh-level reconditioning. Reliable long-horizon continuation therefore remains an open challenge.
+
+</details>
 
 ## Repository Structure
 
@@ -167,4 +168,14 @@ Reconstruction benchmarks are run through:
 python run_benchmark.py <config>
 ```
 
-See [`benchmark/README.md`](benchmark/README.md) for the available configurations and required environment variables.
+See [`benchmark/README.md`](benchmark/README.md) for available configurations and required environment variables.
+
+## Video Evaluation
+
+Synthesized target-view videos are evaluated through:
+
+```bash
+python run_video_evaluation.py <config>
+```
+
+See [`video_evaluation/README.md`](video_evaluation/README.md) for available configurations and required environment variables.
