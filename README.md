@@ -21,7 +21,7 @@ The experiments use motion sequences from the CAPE dataset in a controlled setup
 ├── video_evaluation/       # Evaluation of synthesized target-view video quality
 ├── sv4d_scripts/           # Scripts and modifications for SV4D-based multi-view synthesis
 ├── scripts/                # Rendering, preprocessing, conversion, and utility scripts
-├── data/                   # CAPE dataset and renderings (placeholder) 
+├── data/                   # CAPE dataset and renderings (placeholder)
 ├── outputs/                # Generated experiment outputs (placeholder)
 ├── visualization/          # Visualization outputs (placeholder)
 ├── run_benchmark.py        # Entry point for reconstruction benchmarks
@@ -32,12 +32,32 @@ This repository is a research prototype intended for controlled experimentation 
 
 ## Environment Setup
 
-Different stages of the experimental pipeline use separate Conda environments due to their differing software requirements.
-
-The environment specifications are provided in `environments/`:
+Different stages of the experimental pipeline use separate Conda environments.
 
 ```text
 environments/
 ├── rendering.yml
 ├── benchmark.yml
 └── video_evaluation.yml
+```
+
+## Running the Benchmark
+
+Set the required environment variables for the tracker you want to evaluate:
+
+```text
+CAPE_ROOT
+SMPL_ROOT
+SMPLX2SMPL_PATH
+EASYMOCAP_RESULTS
+WHAM_RESULTS
+MULTIHMR_RESULTS
+```
+
+Then run a benchmark config from the repository root:
+
+```bash
+python run_benchmark.py benchmark/configs/wham.yml
+```
+
+Replace `wham.yml` with the config you want to evaluate.

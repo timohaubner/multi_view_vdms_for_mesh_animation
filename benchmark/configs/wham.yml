@@ -1,11 +1,14 @@
-cape_root: "E:/DLHM/Data/cape_release"
-smpl_root: "E:/DLHM/Data/smpl/models"
+cape_root: "${CAPE_ROOT}"
+smpl_root: "${SMPL_ROOT}"
 
 gt_type: "unclothed"
 
 tracker:
   name: "wham"
   mode: "sparse_frames"
+  prediction_root: "${WHAM_RESULTS}/FullRun"
+  sequence_dir_format: "{subject}/{subject}_{sequence}_front"
+  prediction_file: "wham_output.pkl"
 
 metrics:
   - mpvpe
@@ -29,166 +32,131 @@ sequences:
   - subject: "00032"
     gender: "male"
     sequence: "longshort_flying_eagle"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00032/00032_longshort_flying_eagle_front/wham_output.pkl"
 
   - subject: "00032"
     gender: "male"
     sequence: "shortlong_hips"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00032/00032_shortlong_hips_front/wham_output.pkl"
 
   - subject: "00032"
     gender: "male"
     sequence: "shortshort_punching"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00032/00032_shortshort_punching_front/wham_output.pkl"
 
   - subject: "00096"
     gender: "male"
     sequence: "jerseyshort_chicken_wings"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00096/00096_jerseyshort_chicken_wings_front/wham_output.pkl"
 
   - subject: "00096"
     gender: "male"
     sequence: "jerseyshort_shoulders_mill"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00096/00096_jerseyshort_shoulders_mill_front/wham_output.pkl"
 
   - subject: "00096"
     gender: "male"
     sequence: "longshort_ballerina_spin"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00096/00096_longshort_ballerina_spin_front/wham_output.pkl"
 
   - subject: "00096"
     gender: "male"
     sequence: "shirtlong_basketball"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00096/00096_shirtlong_basketball_front/wham_output.pkl"
 
   - subject: "00096"
     gender: "male"
     sequence: "shirtlong_punching"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00096/00096_shirtlong_punching_front/wham_output.pkl"
 
   - subject: "00096"
     gender: "male"
     sequence: "shirtshort_ATUsquat"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00096/00096_shirtshort_ATUsquat_front/wham_output.pkl"
 
   - subject: "00096"
     gender: "male"
     sequence: "shortshort_soccer"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00096/00096_shortshort_soccer_front/wham_output.pkl"
 
   - subject: "00127"
     gender: "male"
     sequence: "shortlong_ATUsquat"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00127/00127_shortlong_ATUsquat_front/wham_output.pkl"
 
   - subject: "00127"
     gender: "male"
     sequence: "shortlong_ballerina_spin"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00127/00127_shortlong_ballerina_spin_front/wham_output.pkl"
 
   - subject: "00127"
     gender: "male"
     sequence: "shortlong_bend_back_and_front"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00127/00127_shortlong_bend_back_and_front_front/wham_output.pkl"
 
   - subject: "00145"
     gender: "male"
     sequence: "shortlong_hips"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00145/00145_shortlong_hips_front/wham_output.pkl"
 
   - subject: "00145"
     gender: "male"
     sequence: "shortlong_punching"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00145/00145_shortlong_punching_front/wham_output.pkl"
 
   - subject: "00145"
     gender: "male"
     sequence: "shortlong_simple"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00145/00145_shortlong_simple_front/wham_output.pkl"
 
   - subject: "00145"
     gender: "male"
     sequence: "shortlong_twist_tilt_left"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00145/00145_shortlong_twist_tilt_left_front/wham_output.pkl"
 
   - subject: "00215"
     gender: "male"
     sequence: "jerseyshort_flying_eagle"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00215/00215_jerseyshort_flying_eagle_front/wham_output.pkl"
 
   - subject: "00215"
     gender: "male"
     sequence: "jerseyshort_hips"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00215/00215_jerseyshort_hips_front/wham_output.pkl"
 
   - subject: "00215"
     gender: "male"
     sequence: "poloshort_bend_back_and_front"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00215/00215_poloshort_bend_back_and_front_front/wham_output.pkl"
 
   - subject: "00215"
     gender: "male"
     sequence: "poloshort_soccer"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00215/00215_poloshort_soccer_front/wham_output.pkl"
 
   - subject: "00215"
     gender: "male"
     sequence: "shortlong_tilt_twist_left"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/00215/00215_shortlong_tilt_twist_left_front/wham_output.pkl"
 
   - subject: "03331"
     gender: "female"
     sequence: "longshort_chicken_wings"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/03331/03331_longshort_chicken_wings_front/wham_output.pkl"
 
   - subject: "03331"
     gender: "female"
     sequence: "shortshort_punching"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/03331/03331_shortshort_punching_front/wham_output.pkl"
 
   - subject: "03375"
     gender: "male"
     sequence: "blazerlong_babysit_trial2"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/03375/03375_blazerlong_babysit_trial2_front/wham_output.pkl"
 
   - subject: "03375"
     gender: "male"
     sequence: "blazerlong_volleyball_trial1"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/03375/03375_blazerlong_volleyball_trial1_front/wham_output.pkl"
 
   - subject: "03375"
     gender: "male"
     sequence: "longlong_basketball_trial2"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/03375/03375_longlong_basketball_trial2_front/wham_output.pkl"
 
   - subject: "03375"
     gender: "male"
     sequence: "longlong_climb_trial1"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/03375/03375_longlong_climb_trial1_front/wham_output.pkl"
 
   - subject: "03375"
     gender: "male"
     sequence: "longlong_golf_trial1"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/03375/03375_longlong_golf_trial1_front/wham_output.pkl"
 
   - subject: "03375"
     gender: "male"
     sequence: "longlong_handball_trial1"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/03375/03375_longlong_handball_trial1_front/wham_output.pkl"
 
   - subject: "03375"
     gender: "male"
     sequence: "longlong_music_trial1"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/03375/03375_longlong_music_trial1_front/wham_output.pkl"
 
   - subject: "03375"
     gender: "male"
     sequence: "shortlong_soccer_trial2"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/03375/03375_shortlong_soccer_trial2_front/wham_output.pkl"
-    export_meshes: True
 
   - subject: "03375"
     gender: "male"
     sequence: "shortshort_run_trial2"
-    prediction_path: "E:/DLHM/results/WHAM/FullRun/03375/03375_shortshort_run_trial2_front/wham_output.pkl"
-

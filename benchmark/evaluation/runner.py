@@ -1,26 +1,26 @@
 from pathlib import Path
 import yaml
 import pandas as pd
-from mpmath.calculus.calculus import defun
 
 from benchmark.core.cape import load_cape_gt
 from benchmark.core.smpl import load_smpl_j_regressor
 from benchmark.core.mesh_export import MeshExporter
 from benchmark.trackers.registry import get_tracker_loader
 from benchmark.evaluation.evaluator import SequenceEvaluator
+from benchmark.core.paths import resolve_path
 
 class BenchmarkRunner:
     def __init__(self, config_path: Path):
         with open(config_path, "r") as f:
             self.config = yaml.safe_load(f)
 
-        self.cape_root = Path(self.config["cape_root"])
+        self.cape_root = resolve_path(self.config["cape_root"])
         self.gt_type = self.config.get("gt_type", "unclothed")
-        self.smpl_root = Path(self.config["smpl_root"])
+        self.smpl_root = resolve_path(self.config["smpl_root"])
 
         smplx2smpl_path = self.config.get("smplx2smpl_path", None)
         if smplx2smpl_path is not None:
-            smplx2smpl_path = Path(smplx2smpl_path)
+            smplx2smpl_path = resolve_path(smplx2smpl_path)
 
         self.output_root = Path(self.config["output"]["dir"])
         self.output_root.parent.mkdir(parents=True, exist_ok=True)
@@ -37,11 +37,64 @@ class BenchmarkRunner:
         self.exporter = MeshExporter(smpl_male_path, smpl_female_path, self.output_root)
         self.export_meshes_all_sequences = self.config["output"].get("export_meshes_all_sequences", False)
 
-        tracker_name = self.config["tracker"]["name"]
-        self.mode = self.config["tracker"].get("mode", "default")
+        self.tracker_config = self.config["tracker"]
+
+        tracker_name = self.tracker_config["name"]
+        self.mode = self.tracker_config.get("mode", "default")
         self.tracker_loader = get_tracker_loader(tracker_name, smplx2smpl_path)
 
         self.metrics = self.config["metrics"]
+
+    def _get_prediction_paths(self, item):
+        if "prediction_path" in item:
+            return [resolve_path(item["prediction_path"])]
+
+        if "prediction_paths" in item:
+            return [resolve_path(path) for path in item["prediction_paths"]]
+
+        prediction_roots = self.tracker_config.get("prediction_roots")
+
+        if prediction_roots:
+            sequence_dir_format = self.tracker_config.get("sequence_dir_format", "{subject}/{sequence}")
+            sequence_dir = sequence_dir_format.format(subject=item["subject"], sequence=item["sequence"])
+            prediction_subdir = self.tracker_config.get("prediction_subdir")
+            prediction_file = self.tracker_config.get("prediction_file")
+
+            prediction_paths = []
+
+            for root in prediction_roots:
+                prediction_path = resolve_path(root) / sequence_dir
+
+                if prediction_subdir:
+                    prediction_path = prediction_path / prediction_subdir
+
+                if prediction_file:
+                    prediction_path = prediction_path / prediction_file
+
+                prediction_paths.append(prediction_path)
+
+            return prediction_paths
+
+        prediction_root = self.tracker_config.get("prediction_root")
+
+        if prediction_root is None:
+            raise ValueError("No prediction path specified.")
+
+        prediction_root = resolve_path(prediction_root)
+        sequence_dir_format = self.tracker_config.get("sequence_dir_format", "{subject}/{sequence}")
+        sequence_dir = sequence_dir_format.format(subject=item["subject"], sequence=item["sequence"])
+        prediction_path = prediction_root / sequence_dir
+
+        prediction_subdir = self.tracker_config.get("prediction_subdir")
+        prediction_file = self.tracker_config.get("prediction_file")
+
+        if prediction_subdir:
+            prediction_path = prediction_path / prediction_subdir
+
+        if prediction_file:
+            prediction_path = prediction_path / prediction_file
+
+        return [prediction_path]
 
     def run(self):
         rows = []
@@ -50,13 +103,10 @@ class BenchmarkRunner:
             subject = item["subject"]
             sequence = item["sequence"]
             gender = item["gender"]
+
             export_meshes = item.get("export_meshes", False)
 
-            if self.mode == "auto":
-                prediction_paths = [Path(path) for path in item["prediction_paths"]]
-            else:
-                prediction_paths = [Path(item["prediction_path"])]
-
+            prediction_paths = self._get_prediction_paths(item)
 
             print(f"Evaluating {subject} / {sequence}")
 

@@ -1,10 +1,12 @@
-cape_root: "E:/DLHM/Data/cape_release"
-smpl_root: "E:/DLHM/Data/smpl/models"
+cape_root: "${CAPE_ROOT}"
+smpl_root: "${SMPL_ROOT}"
 
 gt_type: "unclothed"
 
 tracker:
   name: "easymocap"
+  prediction_root: "${EASYMOCAP_RESULTS}/Azim30Real"
+  prediction_subdir: "meshes"
 
 metrics:
   - mpvpe
@@ -25,165 +27,131 @@ sequences:
   - subject: "00032"
     gender: "male"
     sequence: "longshort_flying_eagle"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00032/longshort_flying_eagle/meshes"
 
   - subject: "00032"
     gender: "male"
     sequence: "shortlong_hips"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00032/shortlong_hips/meshes"
 
   - subject: "00032"
     gender: "male"
     sequence: "shortshort_punching"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00032/shortshort_punching/meshes"
 
   - subject: "00096"
     gender: "male"
     sequence: "jerseyshort_chicken_wings"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00096/jerseyshort_chicken_wings/meshes"
 
   - subject: "00096"
     gender: "male"
     sequence: "jerseyshort_shoulders_mill"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00096/jerseyshort_shoulders_mill/meshes"
 
   - subject: "00096"
     gender: "male"
     sequence: "longshort_ballerina_spin"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00096/longshort_ballerina_spin/meshes"
 
   - subject: "00096"
     gender: "male"
     sequence: "shirtlong_basketball"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00096/shirtlong_basketball/meshes"
 
   - subject: "00096"
     gender: "male"
     sequence: "shirtlong_punching"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00096/shirtlong_punching/meshes"
 
   - subject: "00096"
     gender: "male"
     sequence: "shirtshort_ATUsquat"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00096/shirtshort_ATUsquat/meshes"
 
   - subject: "00096"
     gender: "male"
     sequence: "shortshort_soccer"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00096/shortshort_soccer/meshes"
 
   - subject: "00127"
     gender: "male"
     sequence: "shortlong_ATUsquat"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00127/shortlong_ATUsquat/meshes"
 
   - subject: "00127"
     gender: "male"
     sequence: "shortlong_ballerina_spin"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00127/shortlong_ballerina_spin/meshes"
 
   - subject: "00127"
     gender: "male"
     sequence: "shortlong_bend_back_and_front"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00127/shortlong_bend_back_and_front/meshes"
 
   - subject: "00145"
     gender: "male"
     sequence: "shortlong_hips"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00145/shortlong_hips/meshes"
 
   - subject: "00145"
     gender: "male"
     sequence: "shortlong_punching"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00145/shortlong_punching/meshes"
 
   - subject: "00145"
     gender: "male"
     sequence: "shortlong_simple"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00145/shortlong_simple/meshes"
 
   - subject: "00145"
     gender: "male"
     sequence: "shortlong_twist_tilt_left"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00145/shortlong_twist_tilt_left/meshes"
 
   - subject: "00215"
     gender: "male"
     sequence: "jerseyshort_flying_eagle"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00215/jerseyshort_flying_eagle/meshes"
 
   - subject: "00215"
     gender: "male"
     sequence: "jerseyshort_hips"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00215/jerseyshort_hips/meshes"
 
   - subject: "00215"
     gender: "male"
     sequence: "poloshort_bend_back_and_front"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00215/poloshort_bend_back_and_front/meshes"
 
   - subject: "00215"
     gender: "male"
     sequence: "poloshort_soccer"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00215/poloshort_soccer/meshes"
 
   - subject: "00215"
     gender: "male"
     sequence: "shortlong_tilt_twist_left"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/00215/shortlong_tilt_twist_left/meshes"
 
   - subject: "03331"
     gender: "female"
     sequence: "longshort_chicken_wings"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/03331/longshort_chicken_wings/meshes"
 
   - subject: "03331"
     gender: "female"
     sequence: "shortshort_punching"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/03331/shortshort_punching/meshes"
 
   - subject: "03375"
     gender: "male"
     sequence: "blazerlong_babysit_trial2"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/03375/blazerlong_babysit_trial2/meshes"
 
   - subject: "03375"
     gender: "male"
     sequence: "blazerlong_volleyball_trial1"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/03375/blazerlong_volleyball_trial1/meshes"
 
   - subject: "03375"
     gender: "male"
     sequence: "longlong_basketball_trial2"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/03375/longlong_basketball_trial2/meshes"
 
   - subject: "03375"
     gender: "male"
     sequence: "longlong_climb_trial1"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/03375/longlong_climb_trial1/meshes"
 
   - subject: "03375"
     gender: "male"
     sequence: "longlong_golf_trial1"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/03375/longlong_golf_trial1/meshes"
 
   - subject: "03375"
     gender: "male"
     sequence: "longlong_handball_trial1"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/03375/longlong_handball_trial1/meshes"
 
   - subject: "03375"
     gender: "male"
     sequence: "longlong_music_trial1"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/03375/longlong_music_trial1/meshes"
 
   - subject: "03375"
     gender: "male"
     sequence: "shortlong_soccer_trial2"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/03375/shortlong_soccer_trial2/meshes"
-    export_meshes: True
 
   - subject: "03375"
     gender: "male"
     sequence: "shortshort_run_trial2"
-    prediction_path: "E:/DLHM/results/EasyMocap/Azim30Real/03375/shortshort_run_trial2/meshes"
