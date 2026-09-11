@@ -1,0 +1,87 @@
+output_path: video_evaluation/results\Auto\Run2\GT
+
+videos:
+
+  00096_jerseyshort_shoulders_mill_45:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00096_jerseyshort_shoulders_mill\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00096_jerseyshort_shoulders_mill\45_sec.mp4
+
+  00096_jerseyshort_shoulders_mill_90:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00096_jerseyshort_shoulders_mill\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00096_jerseyshort_shoulders_mill\90_sec.mp4
+
+  00096_jerseyshort_shoulders_mill_270:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00096_jerseyshort_shoulders_mill\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00096_jerseyshort_shoulders_mill\270_sec.mp4
+
+  00096_jerseyshort_shoulders_mill_315:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00096_jerseyshort_shoulders_mill\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00096_jerseyshort_shoulders_mill\315_sec.mp4
+
+
+  00096_shirtlong_punching_45:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00096_shirtlong_punching\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00096_shirtlong_punching\45_sec.mp4
+
+  00096_shirtlong_punching_90:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00096_shirtlong_punching\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00096_shirtlong_punching\90_sec.mp4
+
+  00096_shirtlong_punching_270:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00096_shirtlong_punching\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00096_shirtlong_punching\270_sec.mp4
+
+  00096_shirtlong_punching_315:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00096_shirtlong_punching\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00096_shirtlong_punching\315_sec.mp4
+
+
+  00145_shortlong_twist_tilt_left_45:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00145_shortlong_twist_tilt_left\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00145_shortlong_twist_tilt_left\45_sec.mp4
+
+  00145_shortlong_twist_tilt_left_90:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00145_shortlong_twist_tilt_left\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00145_shortlong_twist_tilt_left\90_sec.mp4
+
+  00145_shortlong_twist_tilt_left_270:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00145_shortlong_twist_tilt_left\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00145_shortlong_twist_tilt_left\270_sec.mp4
+
+  00145_shortlong_twist_tilt_left_315:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00145_shortlong_twist_tilt_left\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00145_shortlong_twist_tilt_left\315_sec.mp4
+
+
+  00215_poloshort_bend_back_and_front_45:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00215_poloshort_bend_back_and_front\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00215_poloshort_bend_back_and_front\45_sec.mp4
+
+  00215_poloshort_bend_back_and_front_90:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00215_poloshort_bend_back_and_front\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00215_poloshort_bend_back_and_front\90_sec.mp4
+
+  00215_poloshort_bend_back_and_front_270:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00215_poloshort_bend_back_and_front\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00215_poloshort_bend_back_and_front\270_sec.mp4
+
+  00215_poloshort_bend_back_and_front_315:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00215_poloshort_bend_back_and_front\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00215_poloshort_bend_back_and_front\315_sec.mp4
+
+
+  00215_shortlong_tilt_twist_left_45:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00215_shortlong_tilt_twist_left\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00215_shortlong_tilt_twist_left\45_sec.mp4
+
+  00215_shortlong_tilt_twist_left_90:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00215_shortlong_tilt_twist_left\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00215_shortlong_tilt_twist_left\90_sec.mp4
+
+  00215_shortlong_tilt_twist_left_270:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00215_shortlong_tilt_twist_left\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00215_shortlong_tilt_twist_left\270_sec.mp4
+
+  00215_shortlong_tilt_twist_left_315:
+    prediction: ${SV4D_RESULTS}\AutoRedo\Run2\GT\00215_shortlong_tilt_twist_left\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\AutoRedo\Run1\00215_shortlong_tilt_twist_left\315_sec.mp4

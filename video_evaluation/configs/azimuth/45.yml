@@ -1,0 +1,533 @@
+output_path: video_evaluation/results\Azim45Merged
+
+videos:
+
+  00032_longshort_flying_eagle_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00032\longshort_flying_eagle\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00032\longshort_flying_eagle\45_00032_longshort_flying_eagle.mp4
+
+  00032_longshort_flying_eagle_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00032\longshort_flying_eagle\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00032\longshort_flying_eagle\315_00032_longshort_flying_eagle.mp4
+
+  00032_shortlong_hips_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00032\shortlong_hips\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00032\shortlong_hips\45_00032_shortlong_hips.mp4
+
+  00032_shortlong_hips_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00032\shortlong_hips\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00032\shortlong_hips\315_00032_shortlong_hips.mp4
+
+  00032_shortshort_punching_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00032\shortshort_punching\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00032\shortshort_punching\45_00032_shortshort_punching.mp4
+
+  00032_shortshort_punching_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00032\shortshort_punching\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00032\shortshort_punching\315_00032_shortshort_punching.mp4
+
+  00096_jerseyshort_chicken_wings_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\jerseyshort_chicken_wings\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\jerseyshort_chicken_wings\45_00096_jerseyshort_chicken_wings.mp4
+
+  00096_jerseyshort_chicken_wings_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\jerseyshort_chicken_wings\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\jerseyshort_chicken_wings\315_00096_jerseyshort_chicken_wings.mp4
+
+  00096_jerseyshort_shoulders_mill_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\jerseyshort_shoulders_mill\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\jerseyshort_shoulders_mill\45_00096_jerseyshort_shoulders_mill.mp4
+
+  00096_jerseyshort_shoulders_mill_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\jerseyshort_shoulders_mill\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\jerseyshort_shoulders_mill\315_00096_jerseyshort_shoulders_mill.mp4
+
+  00096_longshort_ballerina_spin_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\longshort_ballerina_spin\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\longshort_ballerina_spin\45_00096_longshort_ballerina_spin.mp4
+
+  00096_longshort_ballerina_spin_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\longshort_ballerina_spin\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\longshort_ballerina_spin\315_00096_longshort_ballerina_spin.mp4
+
+  00096_shirtlong_basketball_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shirtlong_basketball\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shirtlong_basketball\45_00096_shirtlong_basketball.mp4
+
+  00096_shirtlong_basketball_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shirtlong_basketball\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shirtlong_basketball\315_00096_shirtlong_basketball.mp4
+
+  00096_shirtlong_punching_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shirtlong_punching\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shirtlong_punching\45_00096_shirtlong_punching.mp4
+
+  00096_shirtlong_punching_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shirtlong_punching\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shirtlong_punching\315_00096_shirtlong_punching.mp4
+
+  00096_shirtshort_ATUsquat_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shirtshort_ATUsquat\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shirtshort_ATUsquat\45_00096_shirtshort_ATUsquat.mp4
+
+  00096_shirtshort_ATUsquat_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shirtshort_ATUsquat\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shirtshort_ATUsquat\315_00096_shirtshort_ATUsquat.mp4
+
+  00096_shortshort_soccer_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shortshort_soccer\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shortshort_soccer\45_00096_shortshort_soccer.mp4
+
+  00096_shortshort_soccer_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shortshort_soccer\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shortshort_soccer\315_00096_shortshort_soccer.mp4
+
+  00127_shortlong_ATUsquat_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00127\shortlong_ATUsquat\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00127\shortlong_ATUsquat\45_00127_shortlong_ATUsquat.mp4
+
+  00127_shortlong_ATUsquat_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00127\shortlong_ATUsquat\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00127\shortlong_ATUsquat\315_00127_shortlong_ATUsquat.mp4
+
+  00127_shortlong_ballerina_spin_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00127\shortlong_ballerina_spin\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00127\shortlong_ballerina_spin\45_00127_shortlong_ballerina_spin.mp4
+
+  00127_shortlong_ballerina_spin_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00127\shortlong_ballerina_spin\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00127\shortlong_ballerina_spin\315_00127_shortlong_ballerina_spin.mp4
+
+  00127_shortlong_bend_back_and_front_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00127\shortlong_bend_back_and_front\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00127\shortlong_bend_back_and_front\45_00127_shortlong_bend_back_and_front.mp4
+
+  00127_shortlong_bend_back_and_front_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00127\shortlong_bend_back_and_front\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00127\shortlong_bend_back_and_front\315_00127_shortlong_bend_back_and_front.mp4
+
+  00145_shortlong_hips_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_hips\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_hips\45_00145_shortlong_hips.mp4
+
+  00145_shortlong_hips_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_hips\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_hips\315_00145_shortlong_hips.mp4
+
+  00145_shortlong_punching_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_punching\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_punching\45_00145_shortlong_punching.mp4
+
+  00145_shortlong_punching_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_punching\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_punching\315_00145_shortlong_punching.mp4
+
+  00145_shortlong_simple_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_simple\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_simple\45_00145_shortlong_simple.mp4
+
+  00145_shortlong_simple_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_simple\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_simple\315_00145_shortlong_simple.mp4
+
+  00145_shortlong_twist_tilt_left_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_twist_tilt_left\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_twist_tilt_left\45_00145_shortlong_twist_tilt_left.mp4
+
+  00145_shortlong_twist_tilt_left_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_twist_tilt_left\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_twist_tilt_left\315_00145_shortlong_twist_tilt_left.mp4
+
+  00215_jerseyshort_flying_eagle_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\jerseyshort_flying_eagle\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\jerseyshort_flying_eagle\45_00215_jerseyshort_flying_eagle.mp4
+
+  00215_jerseyshort_flying_eagle_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\jerseyshort_flying_eagle\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\jerseyshort_flying_eagle\315_00215_jerseyshort_flying_eagle.mp4
+
+  00215_jerseyshort_hips_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\jerseyshort_hips\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\jerseyshort_hips\45_00215_jerseyshort_hips.mp4
+
+  00215_jerseyshort_hips_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\jerseyshort_hips\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\jerseyshort_hips\315_00215_jerseyshort_hips.mp4
+
+  00215_poloshort_bend_back_and_front_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\poloshort_bend_back_and_front\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\poloshort_bend_back_and_front\45_00215_poloshort_bend_back_and_front.mp4
+
+  00215_poloshort_bend_back_and_front_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\poloshort_bend_back_and_front\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\poloshort_bend_back_and_front\315_00215_poloshort_bend_back_and_front.mp4
+
+  00215_poloshort_soccer_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\poloshort_soccer\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\poloshort_soccer\45_00215_poloshort_soccer.mp4
+
+  00215_poloshort_soccer_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\poloshort_soccer\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\poloshort_soccer\315_00215_poloshort_soccer.mp4
+
+  00215_shortlong_tilt_twist_left_45:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\shortlong_tilt_twist_left\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\shortlong_tilt_twist_left\45_00215_shortlong_tilt_twist_left.mp4
+
+  00215_shortlong_tilt_twist_left_315:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\shortlong_tilt_twist_left\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\shortlong_tilt_twist_left\315_00215_shortlong_tilt_twist_left.mp4
+
+  03331_longshort_chicken_wings_45:
+    prediction: ${SV4D_RESULTS}\Azim45\03331\longshort_chicken_wings\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03331\longshort_chicken_wings\45_03331_longshort_chicken_wings.mp4
+
+  03331_longshort_chicken_wings_315:
+    prediction: ${SV4D_RESULTS}\Azim45\03331\longshort_chicken_wings\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03331\longshort_chicken_wings\315_03331_longshort_chicken_wings.mp4
+
+  03331_shortshort_punching_45:
+    prediction: ${SV4D_RESULTS}\Azim45\03331\shortshort_punching\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03331\shortshort_punching\45_03331_shortshort_punching.mp4
+
+  03331_shortshort_punching_315:
+    prediction: ${SV4D_RESULTS}\Azim45\03331\shortshort_punching\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03331\shortshort_punching\315_03331_shortshort_punching.mp4
+
+  03375_blazerlong_babysit_trial2_45:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\blazerlong_babysit_trial2\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\blazerlong_babysit_trial2\45_03375_blazerlong_babysit_trial2.mp4
+
+  03375_blazerlong_babysit_trial2_315:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\blazerlong_babysit_trial2\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\blazerlong_babysit_trial2\315_03375_blazerlong_babysit_trial2.mp4
+
+  03375_blazerlong_volleyball_trial1_45:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\blazerlong_volleyball_trial1\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\blazerlong_volleyball_trial1\45_03375_blazerlong_volleyball_trial1.mp4
+
+  03375_blazerlong_volleyball_trial1_315:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\blazerlong_volleyball_trial1\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\blazerlong_volleyball_trial1\315_03375_blazerlong_volleyball_trial1.mp4
+
+  03375_longlong_basketball_trial2_45:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_basketball_trial2\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_basketball_trial2\45_03375_longlong_basketball_trial2.mp4
+
+  03375_longlong_basketball_trial2_315:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_basketball_trial2\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_basketball_trial2\315_03375_longlong_basketball_trial2.mp4
+
+  03375_longlong_climb_trial1_45:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_climb_trial1\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_climb_trial1\45_03375_longlong_climb_trial1.mp4
+
+  03375_longlong_climb_trial1_315:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_climb_trial1\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_climb_trial1\315_03375_longlong_climb_trial1.mp4
+
+  03375_longlong_golf_trial1_45:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_golf_trial1\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_golf_trial1\45_03375_longlong_golf_trial1.mp4
+
+  03375_longlong_golf_trial1_315:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_golf_trial1\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_golf_trial1\315_03375_longlong_golf_trial1.mp4
+
+  03375_longlong_handball_trial1_45:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_handball_trial1\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_handball_trial1\45_03375_longlong_handball_trial1.mp4
+
+  03375_longlong_handball_trial1_315:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_handball_trial1\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_handball_trial1\315_03375_longlong_handball_trial1.mp4
+
+  03375_longlong_music_trial1_45:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_music_trial1\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_music_trial1\45_03375_longlong_music_trial1.mp4
+
+  03375_longlong_music_trial1_315:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_music_trial1\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_music_trial1\315_03375_longlong_music_trial1.mp4
+
+  03375_shortlong_soccer_trial2_45:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\shortlong_soccer_trial2\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\shortlong_soccer_trial2\45_03375_shortlong_soccer_trial2.mp4
+
+  03375_shortlong_soccer_trial2_315:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\shortlong_soccer_trial2\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\shortlong_soccer_trial2\315_03375_shortlong_soccer_trial2.mp4
+
+  03375_shortshort_run_trial2_45:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\shortshort_run_trial2\sv4d2\000000_v001.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\shortshort_run_trial2\45_03375_shortshort_run_trial2.mp4
+
+  03375_shortshort_run_trial2_315:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\shortshort_run_trial2\sv4d2\000000_v004.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\shortshort_run_trial2\315_03375_shortshort_run_trial2.mp4
+
+
+  00032_longshort_flying_eagle_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00032\longshort_flying_eagle\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00032\longshort_flying_eagle\90_00032_longshort_flying_eagle.mp4
+
+  00032_longshort_flying_eagle_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00032\longshort_flying_eagle\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00032\longshort_flying_eagle\270_00032_longshort_flying_eagle.mp4
+
+  00032_shortlong_hips_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00032\shortlong_hips\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00032\shortlong_hips\90_00032_shortlong_hips.mp4
+
+  00032_shortlong_hips_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00032\shortlong_hips\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00032\shortlong_hips\270_00032_shortlong_hips.mp4
+
+  00032_shortshort_punching_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00032\shortshort_punching\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00032\shortshort_punching\90_00032_shortshort_punching.mp4
+
+  00032_shortshort_punching_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00032\shortshort_punching\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00032\shortshort_punching\270_00032_shortshort_punching.mp4
+
+  00096_jerseyshort_chicken_wings_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\jerseyshort_chicken_wings\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\jerseyshort_chicken_wings\90_00096_jerseyshort_chicken_wings.mp4
+
+  00096_jerseyshort_chicken_wings_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\jerseyshort_chicken_wings\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\jerseyshort_chicken_wings\270_00096_jerseyshort_chicken_wings.mp4
+
+  00096_jerseyshort_shoulders_mill_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\jerseyshort_shoulders_mill\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\jerseyshort_shoulders_mill\90_00096_jerseyshort_shoulders_mill.mp4
+
+  00096_jerseyshort_shoulders_mill_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\jerseyshort_shoulders_mill\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\jerseyshort_shoulders_mill\270_00096_jerseyshort_shoulders_mill.mp4
+
+  00096_longshort_ballerina_spin_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\longshort_ballerina_spin\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\longshort_ballerina_spin\90_00096_longshort_ballerina_spin.mp4
+
+  00096_longshort_ballerina_spin_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\longshort_ballerina_spin\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\longshort_ballerina_spin\270_00096_longshort_ballerina_spin.mp4
+
+  00096_shirtlong_basketball_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shirtlong_basketball\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shirtlong_basketball\90_00096_shirtlong_basketball.mp4
+
+  00096_shirtlong_basketball_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shirtlong_basketball\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shirtlong_basketball\270_00096_shirtlong_basketball.mp4
+
+  00096_shirtlong_punching_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shirtlong_punching\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shirtlong_punching\90_00096_shirtlong_punching.mp4
+
+  00096_shirtlong_punching_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shirtlong_punching\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shirtlong_punching\270_00096_shirtlong_punching.mp4
+
+  00096_shirtshort_ATUsquat_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shirtshort_ATUsquat\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shirtshort_ATUsquat\90_00096_shirtshort_ATUsquat.mp4
+
+  00096_shirtshort_ATUsquat_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shirtshort_ATUsquat\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shirtshort_ATUsquat\270_00096_shirtshort_ATUsquat.mp4
+
+  00096_shortshort_soccer_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shortshort_soccer\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shortshort_soccer\90_00096_shortshort_soccer.mp4
+
+  00096_shortshort_soccer_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00096\shortshort_soccer\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00096\shortshort_soccer\270_00096_shortshort_soccer.mp4
+
+  00127_shortlong_ATUsquat_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00127\shortlong_ATUsquat\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00127\shortlong_ATUsquat\90_00127_shortlong_ATUsquat.mp4
+
+  00127_shortlong_ATUsquat_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00127\shortlong_ATUsquat\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00127\shortlong_ATUsquat\270_00127_shortlong_ATUsquat.mp4
+
+  00127_shortlong_ballerina_spin_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00127\shortlong_ballerina_spin\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00127\shortlong_ballerina_spin\90_00127_shortlong_ballerina_spin.mp4
+
+  00127_shortlong_ballerina_spin_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00127\shortlong_ballerina_spin\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00127\shortlong_ballerina_spin\270_00127_shortlong_ballerina_spin.mp4
+
+  00127_shortlong_bend_back_and_front_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00127\shortlong_bend_back_and_front\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00127\shortlong_bend_back_and_front\90_00127_shortlong_bend_back_and_front.mp4
+
+  00127_shortlong_bend_back_and_front_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00127\shortlong_bend_back_and_front\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00127\shortlong_bend_back_and_front\270_00127_shortlong_bend_back_and_front.mp4
+
+  00145_shortlong_hips_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_hips\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_hips\90_00145_shortlong_hips.mp4
+
+  00145_shortlong_hips_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_hips\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_hips\270_00145_shortlong_hips.mp4
+
+  00145_shortlong_punching_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_punching\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_punching\90_00145_shortlong_punching.mp4
+
+  00145_shortlong_punching_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_punching\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_punching\270_00145_shortlong_punching.mp4
+
+  00145_shortlong_simple_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_simple\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_simple\90_00145_shortlong_simple.mp4
+
+  00145_shortlong_simple_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_simple\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_simple\270_00145_shortlong_simple.mp4
+
+  00145_shortlong_twist_tilt_left_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_twist_tilt_left\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_twist_tilt_left\90_00145_shortlong_twist_tilt_left.mp4
+
+  00145_shortlong_twist_tilt_left_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00145\shortlong_twist_tilt_left\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00145\shortlong_twist_tilt_left\270_00145_shortlong_twist_tilt_left.mp4
+
+  00215_jerseyshort_flying_eagle_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\jerseyshort_flying_eagle\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\jerseyshort_flying_eagle\90_00215_jerseyshort_flying_eagle.mp4
+
+  00215_jerseyshort_flying_eagle_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\jerseyshort_flying_eagle\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\jerseyshort_flying_eagle\270_00215_jerseyshort_flying_eagle.mp4
+
+  00215_jerseyshort_hips_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\jerseyshort_hips\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\jerseyshort_hips\90_00215_jerseyshort_hips.mp4
+
+  00215_jerseyshort_hips_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\jerseyshort_hips\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\jerseyshort_hips\270_00215_jerseyshort_hips.mp4
+
+  00215_poloshort_bend_back_and_front_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\poloshort_bend_back_and_front\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\poloshort_bend_back_and_front\90_00215_poloshort_bend_back_and_front.mp4
+
+  00215_poloshort_bend_back_and_front_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\poloshort_bend_back_and_front\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\poloshort_bend_back_and_front\270_00215_poloshort_bend_back_and_front.mp4
+
+  00215_poloshort_soccer_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\poloshort_soccer\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\poloshort_soccer\90_00215_poloshort_soccer.mp4
+
+  00215_poloshort_soccer_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\poloshort_soccer\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\poloshort_soccer\270_00215_poloshort_soccer.mp4
+
+  00215_shortlong_tilt_twist_left_90:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\shortlong_tilt_twist_left\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\shortlong_tilt_twist_left\90_00215_shortlong_tilt_twist_left.mp4
+
+  00215_shortlong_tilt_twist_left_270:
+    prediction: ${SV4D_RESULTS}\Azim45\00215\shortlong_tilt_twist_left\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\00215\shortlong_tilt_twist_left\270_00215_shortlong_tilt_twist_left.mp4
+
+  03331_longshort_chicken_wings_90:
+    prediction: ${SV4D_RESULTS}\Azim45\03331\longshort_chicken_wings\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03331\longshort_chicken_wings\90_03331_longshort_chicken_wings.mp4
+
+  03331_longshort_chicken_wings_270:
+    prediction: ${SV4D_RESULTS}\Azim45\03331\longshort_chicken_wings\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03331\longshort_chicken_wings\270_03331_longshort_chicken_wings.mp4
+
+  03331_shortshort_punching_90:
+    prediction: ${SV4D_RESULTS}\Azim45\03331\shortshort_punching\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03331\shortshort_punching\90_03331_shortshort_punching.mp4
+
+  03331_shortshort_punching_270:
+    prediction: ${SV4D_RESULTS}\Azim45\03331\shortshort_punching\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03331\shortshort_punching\270_03331_shortshort_punching.mp4
+
+  03375_blazerlong_babysit_trial2_90:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\blazerlong_babysit_trial2\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\blazerlong_babysit_trial2\90_03375_blazerlong_babysit_trial2.mp4
+
+  03375_blazerlong_babysit_trial2_270:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\blazerlong_babysit_trial2\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\blazerlong_babysit_trial2\270_03375_blazerlong_babysit_trial2.mp4
+
+  03375_blazerlong_volleyball_trial1_90:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\blazerlong_volleyball_trial1\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\blazerlong_volleyball_trial1\90_03375_blazerlong_volleyball_trial1.mp4
+
+  03375_blazerlong_volleyball_trial1_270:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\blazerlong_volleyball_trial1\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\blazerlong_volleyball_trial1\270_03375_blazerlong_volleyball_trial1.mp4
+
+  03375_longlong_basketball_trial2_90:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_basketball_trial2\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_basketball_trial2\90_03375_longlong_basketball_trial2.mp4
+
+  03375_longlong_basketball_trial2_270:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_basketball_trial2\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_basketball_trial2\270_03375_longlong_basketball_trial2.mp4
+
+  03375_longlong_climb_trial1_90:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_climb_trial1\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_climb_trial1\90_03375_longlong_climb_trial1.mp4
+
+  03375_longlong_climb_trial1_270:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_climb_trial1\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_climb_trial1\270_03375_longlong_climb_trial1.mp4
+
+  03375_longlong_golf_trial1_90:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_golf_trial1\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_golf_trial1\90_03375_longlong_golf_trial1.mp4
+
+  03375_longlong_golf_trial1_270:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_golf_trial1\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_golf_trial1\270_03375_longlong_golf_trial1.mp4
+
+  03375_longlong_handball_trial1_90:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_handball_trial1\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_handball_trial1\90_03375_longlong_handball_trial1.mp4
+
+  03375_longlong_handball_trial1_270:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_handball_trial1\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_handball_trial1\270_03375_longlong_handball_trial1.mp4
+
+  03375_longlong_music_trial1_90:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_music_trial1\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_music_trial1\90_03375_longlong_music_trial1.mp4
+
+  03375_longlong_music_trial1_270:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\longlong_music_trial1\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\longlong_music_trial1\270_03375_longlong_music_trial1.mp4
+
+  03375_shortlong_soccer_trial2_90:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\shortlong_soccer_trial2\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\shortlong_soccer_trial2\90_03375_shortlong_soccer_trial2.mp4
+
+  03375_shortlong_soccer_trial2_270:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\shortlong_soccer_trial2\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\shortlong_soccer_trial2\270_03375_shortlong_soccer_trial2.mp4
+
+  03375_shortshort_run_trial2_90:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\shortshort_run_trial2\sv4d2\000000_v002.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\shortshort_run_trial2\90_03375_shortshort_run_trial2.mp4
+
+  03375_shortshort_run_trial2_270:
+    prediction: ${SV4D_RESULTS}\Azim45\03375\shortshort_run_trial2\sv4d2\000000_v003.mp4
+    gt: ${RENDERINGS_ROOT}\Azim_videos\03375\shortshort_run_trial2\270_03375_shortshort_run_trial2.mp4
+

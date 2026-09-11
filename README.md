@@ -53,7 +53,7 @@ conda env create -f environments/benchmark.yml
 More detailed instructions are kept with the corresponding part of the repository.
 
 - [`benchmark/README.md`](benchmark/README.md) — reconstruction benchmark
-- `video_evaluation/` — synthesized-video evaluation
+- [`video_evaluation/README.md`](video_evaluation/README.md) — synthesized-video evaluation
 - `sv4d_scripts/` — SV4D-based multi-view generation
 
 ## Benchmark

@@ -1,12 +1,16 @@
 from pathlib import Path
 import argparse
 
-from video_evaluation.evaluation.video_evaluation import evaluate_from_config
+from video_evaluation.evaluation.runner import evaluate_from_config
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("config", type=Path, help="Pfad zur YAML-Konfigurationsdatei.")
+    parser.add_argument(
+        "config",
+        type=Path,
+        help="Path to the YAML configuration file.",
+    )
     args = parser.parse_args()
 
     evaluate_from_config(args.config)
